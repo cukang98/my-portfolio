@@ -1,0 +1,6 @@
+.section {
+  padding: var(--section-gap) var(--page-px);
+  max-width: calc(var(--max-width) + (var(--page-px) * 2));
+  margin: 0 auto;
+  width: 100%;
+}

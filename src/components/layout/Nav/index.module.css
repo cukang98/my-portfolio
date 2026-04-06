@@ -1,0 +1,113 @@
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--text-900);
+  z-index: 200;
+  transform-origin: left;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 var(--page-px);
+  transition: background var(--duration-base) var(--ease-out-expo),
+              border-color var(--duration-base) var(--ease-out-expo),
+              backdrop-filter var(--duration-base) var(--ease-out-expo);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.scrolled {
+  background: rgba(245, 245, 247, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: var(--border);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 60px;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-900);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+@media (max-width: 640px) {
+  .links {
+    display: none;
+  }
+}
+
+.link {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-600);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: color var(--duration-fast) ease;
+  position: relative;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--text-900);
+  transition: width var(--duration-base) var(--ease-out-expo);
+}
+
+.link:hover {
+  color: var(--text-900);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.cta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-900);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+  transition: border-color var(--duration-fast) ease,
+              background var(--duration-fast) ease;
+}
+
+.cta:hover {
+  border-color: var(--text-900);
+  background: var(--surface);
+}
+
+@media (max-width: 480px) {
+  .cta {
+    display: none;
+  }
+}
