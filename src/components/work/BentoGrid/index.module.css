@@ -1,19 +1,509 @@
-.grid {
+/* ─── Showcase layout ────────────────────────────────────────────────────────*/
+
+.showcase {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
-  gap: 16px;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
 }
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 960px) {
+  .showcase {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
+/* ─── Spotlight wrap ─────────────────────────────────────────────────────────*/
+
+.spotlightWrap {
+  position: sticky;
+  top: 100px;
+}
+
+@media (max-width: 960px) {
+  .spotlightWrap {
+    position: static;
+  }
+}
+
+/* ─── Spotlight panel ────────────────────────────────────────────────────────*/
+
+.spotlightPanel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Spotlight image ────────────────────────────────────────────────────────*/
+
+.spotlightImageWrap {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.spotlightImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.spotlightImgActive {
+  opacity: 1;
+}
+
+.spotlightImgGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ─── Mobile gallery (carousel) ─────────────────────────────────────────────*/
+
+.mobileGalleryWrap {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileGalleryViewport {
+  flex: 1;
+  overflow: hidden;
+  padding: 24px 0 8px;
+}
+
+.mobileGalleryTrack {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  height: 280px;
+}
+
+.phoneFrame {
+  flex-shrink: 0;
+  width: 148px;
+  height: 100%;
+  border-radius: 20px;
+  background: #0a0a0a;
+  padding: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.phoneNotch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 7px;
+  border-radius: 10px;
+  background: #1a1a1a;
+  z-index: 2;
+}
+
+.phoneScreen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 14px;
+  display: block;
+}
+
+/* ─── Mobile nav controls ───────────────────────────────────────────────────*/
+
+.mobileNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 0 18px;
+}
+
+.mobileNavBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-600);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  padding: 0;
+}
+
+.mobileNavBtn:hover {
+  border-color: var(--text-400);
+  color: var(--text-900);
+}
+
+.mobileNavDots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.mobileNavDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: none;
+  background: var(--text-400);
+  opacity: 0.35;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mobileNavDotActive {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.spotlightNoImage {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 102, 204, 0.06) 0%,
+    var(--bg) 100%
+  );
+}
+
+.spotlightNoImageInitial {
+  font-size: 80px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--text-400);
+  opacity: 0.25;
+  user-select: none;
+}
+
+.spotlightDots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 1;
+}
+
+.spotlightDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.spotlightDotActive {
+  background: #fff;
+  transform: scale(1.5);
+}
+
+/* ─── Spotlight arrows ──────────────────────────────────────────────────────*/
+
+.spotlightArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.25s ease, background 0.2s ease;
+  padding: 0;
+}
+
+.spotlightImageWrap:hover .spotlightArrow {
+  opacity: 1;
+}
+
+.spotlightArrow:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.spotlightArrowLeft {
+  left: 12px;
+}
+
+.spotlightArrowRight {
+  right: 12px;
+}
+
+/* ─── Spotlight body ─────────────────────────────────────────────────────────*/
+
+.spotlightBody {
+  padding: 28px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.spotlightMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spotlightYear {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-400);
+  letter-spacing: 0.06em;
+}
+
+.spotlightLinkRow {
+  display: flex;
+  gap: 14px;
+}
+
+.spotlightLink {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.spotlightLink:hover {
+  opacity: 0.65;
+}
+
+.spotlightTitle {
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-900);
+}
+
+.spotlightDesc {
+  font-size: 15px;
+  color: var(--text-600);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+.spotlightTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* ─── Selector (right column) ────────────────────────────────────────────────*/
+
+.selectorWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selectorLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-400);
+  padding-left: 20px;
+}
+
+.selectorList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ─── List item ──────────────────────────────────────────────────────────────*/
+
+.listItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 14px 20px;
+  border-radius: 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  transition:
+    background var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo);
+}
+
+.listItem:hover {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.listItemActive {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
+}
+
+.listActiveBar {
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  transform-origin: center;
+}
+
+.listNum {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-400);
+  min-width: 20px;
+  flex-shrink: 0;
+  transition: color var(--duration-fast) ease;
+}
+
+.listItemActive .listNum {
+  color: var(--accent);
+}
+
+.listContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.listTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-900);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listSub {
+  font-size: 11px;
+  color: var(--text-400);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listYear {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-400);
+  flex-shrink: 0;
+}
+
+/* ─── Mobile: phone gallery adjustments ─────────────────────────────────────*/
+
+@media (max-width: 960px) {
+  .mobileGalleryTrack {
+    height: 240px;
+  }
+
+  .phoneFrame {
+    width: 128px;
+  }
+}
+
+/* ─── Mobile: horizontal scroll switcher ────────────────────────────────────*/
+
+@media (max-width: 960px) {
+  .selectorWrap {
+    order: -1;
+  }
+
+  .selectorList {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+
+  .selectorList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .listItem {
+    flex-shrink: 0;
+    width: auto;
+    padding: 10px 14px 10px 18px;
+  }
+
+  .listActiveBar {
+    top: auto;
+    left: 14px;
+    right: 14px;
+    bottom: 0;
+    height: 2px;
+    width: auto;
+    border-radius: 2px 2px 0 0;
+    transform-origin: bottom;
+  }
+
+  .listYear {
+    display: none;
+  }
+
+  .listSub {
+    display: none;
   }
 }

@@ -7,9 +7,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./index.module.css";
 
 const navLinks = [
-  { href: "#work",    label: "Work" },
-  { href: "#about",   label: "About" },
-  { href: "#process", label: "Process" },
+  { href: "#work", label: "Work" },
+  { href: "#skills", label: "Skills" },
+  { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -34,7 +34,9 @@ export default function Nav() {
 
       <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <div className={styles.inner}>
-          <a href="#" className={styles.logo}>Cu Kang Tin</a>
+          <a href="#" className={styles.logo}>
+            Cu Kang Tin
+          </a>
 
           <nav className={styles.links}>
             {navLinks.map((link) => (
@@ -44,7 +46,7 @@ export default function Nav() {
             ))}
           </nav>
 
-          <a href="mailto:you@example.com" className={styles.cta}>
+          <a href="mailto:cukang98@gmail.com" className={styles.cta}>
             Get in touch
           </a>
         </div>

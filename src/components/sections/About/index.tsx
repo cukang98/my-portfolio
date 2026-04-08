@@ -17,9 +17,9 @@ const TABS = ["All", "Languages", "Frameworks", "Tooling"] as const;
 type Tab = (typeof TABS)[number];
 
 const stats = [
-  { value: "2+",  label: "years building" },
-  { value: "15+", label: "projects shipped" },
-  { value: "∞",   label: "tabs open" },
+  { value: "2+", label: "years building" },
+  { value: "7+", label: "projects shipped" },
+  { value: "∞", label: "tabs open" },
 ];
 
 export default function About() {
@@ -27,17 +27,14 @@ export default function About() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const filtered =
-    activeTab === "All"
-      ? stack
-      : stack.filter((s) => s.category === activeTab);
+    activeTab === "All" ? stack : stack.filter((s) => s.category === activeTab);
 
   return (
-    <SectionWrapper id="about">
+    <SectionWrapper id="skills">
       <div className={styles.grid}>
-
         {/* ── Left: Bio ─────────────────────────────────────────── */}
         <div className={styles.bio}>
-          <SectionLabel number="02" title="About" />
+          <SectionLabel number="02" title="Skills" />
           <h2 className={styles.heading}>Craft over output.</h2>
 
           <div className={styles.body}>
@@ -52,9 +49,9 @@ export default function About() {
               and clarity to complex UIs.
             </p>
             <p>
-              When I'm not coding, I'm reading about type design, obsessing
-              over animation curves, or taking things apart to understand how
-              they work.
+              When I'm not coding, I'm reading about type design, obsessing over
+              animation curves, or taking things apart to understand how they
+              work.
             </p>
           </div>
 
@@ -67,7 +64,11 @@ export default function About() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.1 * i, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  delay: 0.1 * i,
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
                 <span className={styles.statValue}>{value}</span>
                 <span className={styles.statLabel}>{label}</span>
@@ -154,7 +155,6 @@ export default function About() {
             </AnimatePresence>
           </motion.div>
         </div>
-
       </div>
     </SectionWrapper>
   );

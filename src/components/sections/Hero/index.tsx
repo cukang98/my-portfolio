@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // components
 import Badge from "@/components/ui/Badge";
@@ -15,9 +15,10 @@ import { meta } from "@/data/meta";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+/* ─── Typewriter ─────────────────────────────────────────────────────────── */
+
 type Phase = "initial-delay" | "typing" | "hold" | "deleting";
 
-// Cycles through lines: type → hold → backspace → next
 function useRotatingTypewriter(
   lines: string[],
   typeSpeed = 38,
@@ -30,12 +31,10 @@ function useRotatingTypewriter(
 
   useEffect(() => {
     const line = lines[lineIndex];
-
     if (phase === "initial-delay") {
       const t = setTimeout(() => setPhase("typing"), 600);
       return () => clearTimeout(t);
     }
-
     if (phase === "typing") {
       if (displayed.length < line.length) {
         const t = setTimeout(
@@ -48,12 +47,10 @@ function useRotatingTypewriter(
         return () => clearTimeout(t);
       }
     }
-
     if (phase === "hold") {
       setPhase("deleting");
       return;
     }
-
     if (phase === "deleting") {
       if (displayed.length > 0) {
         const t = setTimeout(
@@ -68,52 +65,172 @@ function useRotatingTypewriter(
     }
   }, [phase, displayed, lineIndex, lines, typeSpeed, deleteSpeed, holdMs]);
 
-  const cursorActive = phase === "typing" || phase === "deleting";
-  return { displayed, cursorActive };
+  return {
+    displayed,
+    cursorActive: phase === "typing" || phase === "deleting",
+  };
 }
 
-const variants = {
-  hidden: { opacity: 0, y: 20 },
+function Typewriter({ lines }: { lines: string[] }) {
+  const { displayed, cursorActive } = useRotatingTypewriter(lines);
+  return (
+    <>
+      {displayed}
+      <span className={cursorActive ? styles.cursor : styles.cursorDone}>
+        |
+      </span>
+    </>
+  );
+}
+
+/* ─── Floating chip ──────────────────────────────────────────────────────── */
+
+function FloatingChip({
+  label,
+  color,
+  className,
+  delay,
+}: {
+  label: string;
+  color: string;
+  className: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      className={`${styles.chip} ${className}`}
+      initial={{ opacity: 0, scale: 0.75 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay, ease }}
+    >
+      <span className={styles.chipDot} style={{ background: color }} />
+      <span className={styles.chipLabel}>{label}</span>
+    </motion.div>
+  );
+}
+
+/* ─── Photo card ─────────────────────────────────────────────────────────── */
+
+function PhotoCard({
+  springX,
+  springY,
+}: {
+  springX: ReturnType<typeof useSpring>;
+  springY: ReturnType<typeof useSpring>;
+}) {
+  const rotateX = useTransform(springY, [0, 1], [7, -7]);
+  const rotateY = useTransform(springX, [0, 1], [-7, 7]);
+
+  return (
+    <div className={styles.tiltPerspective}>
+      <motion.div className={styles.photoCard} style={{ rotateX, rotateY }}>
+        {/* Spinning gradient ring + video */}
+        <div className={styles.photoClip}>
+          <div className={styles.photoRing} />
+          <div className={styles.photoInner}>
+            <video
+              src="/images/ck_greeting.mp4"
+              className={styles.photo}
+              autoPlay
+              muted
+              playsInline
+            />
+          </div>
+        </div>
+
+        {/* Floating chips */}
+        <FloatingChip
+          label="React"
+          color="#61DAFB"
+          className={styles.chipReact}
+          delay={0.85}
+        />
+        <FloatingChip
+          label="TypeScript"
+          color="#3178C6"
+          className={styles.chipTs}
+          delay={1.0}
+        />
+        <FloatingChip
+          label="Next.js"
+          color="#888"
+          className={styles.chipNext}
+          delay={1.15}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── Fade-up variants ───────────────────────────────────────────────────── */
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease, delay },
+    transition: { duration: 0.65, ease, delay },
   }),
 };
 
+/* ─── Main export ────────────────────────────────────────────────────────── */
+
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const mouseXMv = useMotionValue(0.5);
+  const mouseYMv = useMotionValue(0.5);
+  const springX = useSpring(mouseXMv, { stiffness: 40, damping: 22 });
+  const springY = useSpring(mouseYMv, { stiffness: 40, damping: 22 });
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      const rect = sectionRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      mouseXMv.set((e.clientX - rect.left) / rect.width);
+      mouseYMv.set((e.clientY - rect.top) / rect.height);
+    },
+    [mouseXMv, mouseYMv],
+  );
+
+  const match = meta.name.match(/^(Hi,\s*I'm\s+)(.*)/);
+  const greeting = match?.[1] ?? "";
+  const personName = match?.[2] ?? meta.name;
+
   return (
-    <section className={styles.hero}>
+    <section
+      className={styles.hero}
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+    >
       <div className={styles.inner}>
+        {/* ─── Left: text ─── */}
         <div className={styles.content}>
-          <motion.div custom={0} variants={variants} initial="hidden" animate="visible">
+          <motion.div
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+          >
             <Badge available={meta.available} />
           </motion.div>
 
-          <motion.h1
-            className={styles.name}
+          <motion.div
+            className={styles.headingBlock}
             custom={0.1}
-            variants={variants}
+            variants={fadeUp}
             initial="hidden"
             animate="visible"
           >
-            {meta.name}
-          </motion.h1>
-
-          <motion.p
-            className={styles.role}
-            custom={0.18}
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-          >
-            {meta.role}
-          </motion.p>
+            <span className={styles.greeting}>{greeting}</span>
+            <h1 className={styles.name}>{personName}</h1>
+            <span className={styles.role}>{meta.role}</span>
+          </motion.div>
 
           <motion.p
             className={styles.tagline}
-            custom={0.26}
-            variants={variants}
+            custom={0.25}
+            variants={fadeUp}
             initial="hidden"
             animate="visible"
           >
@@ -123,76 +240,61 @@ export default function Hero() {
           <motion.div
             className={styles.ctas}
             custom={0.34}
-            variants={variants}
+            variants={fadeUp}
             initial="hidden"
             animate="visible"
           >
-            <Button href="#work" variant="filled">View Work</Button>
-            <Button href={`mailto:${meta.email}`} variant="ghost">Get in touch</Button>
+            <Button href="#work" variant="filled">
+              View Work
+            </Button>
+            <Button href={`mailto:${meta.email}`} variant="ghost">
+              Get in touch
+            </Button>
+          </motion.div>
+
+          <motion.div
+            className={styles.stack}
+            custom={0.44}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+          >
+            {["React", "TypeScript", "Next.js", "Framer Motion"].map(
+              (tech, i) => (
+                <span key={tech} className={styles.stackItem}>
+                  {i > 0 && <span className={styles.stackSep}>·</span>}
+                  {tech}
+                </span>
+              ),
+            )}
           </motion.div>
         </div>
 
-        {/* Decorative grid */}
+        {/* ─── Right: photo ─── */}
         <motion.div
-          className={styles.decoration}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.4, ease }}
+          className={styles.photoArea}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.25, ease }}
         >
-          <GridDecoration />
+          <div className={styles.photoGlow} />
+          <PhotoCard springX={springX} springY={springY} />
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll hint */}
       <motion.div
         className={styles.scrollHint}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.6 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
       >
         <motion.div
           className={styles.scrollDot}
-          animate={{ y: [0, 6, 0] }}
+          animate={{ y: [0, 7, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
     </section>
-  );
-}
-
-function Typewriter({ lines }: { lines: string[] }) {
-  const { displayed, cursorActive } = useRotatingTypewriter(lines);
-  return (
-    <>
-      {displayed}
-      <span className={cursorActive ? styles.cursor : styles.cursorDone}>|</span>
-    </>
-  );
-}
-
-function GridDecoration() {
-  const cols = 8;
-  const rows = 8;
-
-  return (
-    <svg
-      className={styles.grid}
-      viewBox={`0 0 ${cols * 40} ${rows * 40}`}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {Array.from({ length: cols * rows }).map((_, i) => {
-        const x = (i % cols) * 40 + 20;
-        const y = Math.floor(i / cols) * 40 + 20;
-        const opacity = Math.random() * 0.5 + 0.05;
-        return (
-          <circle key={i} cx={x} cy={y} r={1.5} fill="currentColor" opacity={opacity} />
-        );
-      })}
-      {/* Accent ring */}
-      <circle cx={200} cy={180} r={60} stroke="currentColor" strokeWidth={0.5} opacity={0.15} />
-      <circle cx={200} cy={180} r={100} stroke="currentColor" strokeWidth={0.5} opacity={0.08} />
-      <circle cx={200} cy={180} r={4} fill="currentColor" opacity={0.3} />
-    </svg>
   );
 }

@@ -1,3 +1,5 @@
+/* ─── Section ────────────────────────────────────────────────────────────── */
+
 .hero {
   min-height: 100svh;
   display: flex;
@@ -6,61 +8,125 @@
   padding: 80px var(--page-px) 64px;
   position: relative;
   overflow: hidden;
+  /* Subtle dot-grid texture */
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -14px -14px;
+}
+
+/* Vignette to fade the dot grid toward center */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 80% at 40% 50%,
+    var(--bg) 30%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   max-width: var(--max-width);
   margin: 0 auto;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 360px;
   align-items: center;
-  gap: 64px;
+  gap: 80px;
 }
 
-@media (max-width: 768px) {
-  .inner {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
+/* ─── Left: content ──────────────────────────────────────────────────────── */
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
   align-items: flex-start;
 }
 
+/* ─── Heading block ──────────────────────────────────────────────────────── */
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.greeting {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-400);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .name {
-  font-size: clamp(48px, 7vw, 88px);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 1.0;
-  color: var(--text-900);
+  font-size: clamp(46px, 6vw, 76px);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  background: linear-gradient(140deg, var(--text-900) 25%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
   margin-top: 4px;
 }
 
-.role {
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 400;
-  color: var(--text-600);
-  letter-spacing: -0.02em;
-  margin-top: -4px;
+/* Animated accent underline */
+.name::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 48%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 99px;
+  transform-origin: left;
+  animation: expand 0.9s var(--ease-out-expo) 0.55s both;
 }
 
-.tagline {
-  font-size: 16px;
-  color: var(--text-400);
-  line-height: 1.55;
-  max-width: 400px;
+@keyframes expand {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.role {
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 400;
+  color: var(--text-600);
   letter-spacing: -0.01em;
+  margin-top: 10px;
+}
+
+/* ─── Tagline / typewriter ───────────────────────────────────────────────── */
+
+.tagline {
+  font-size: 15px;
+  color: var(--text-400);
+  line-height: 1.6;
+  min-height: 1.6em;
+  letter-spacing: -0.01em;
+  max-width: 400px;
 }
 
 .cursor {
   display: inline-block;
   margin-left: 1px;
-  color: var(--text-400);
+  color: var(--accent);
   animation: blink 0.9s step-start infinite;
 }
 
@@ -73,40 +139,270 @@
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
+
+/* ─── CTAs ───────────────────────────────────────────────────────────────── */
 
 .ctas {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 8px;
   flex-wrap: wrap;
 }
 
-/* ─── Decoration ─────────────────────────────────────────────────────────────*/
+/* ─── Stack strip ────────────────────────────────────────────────────────── */
 
-.decoration {
+.stack {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.stackItem {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-400);
+  letter-spacing: 0.03em;
+}
+
+.stackSep {
+  margin: 0 8px;
+  color: var(--border-hover);
+}
+
+/* ─── Right: photo area ──────────────────────────────────────────────────── */
+
+.photoArea {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-900);
 }
 
-@media (max-width: 768px) {
-  .decoration {
-    display: none;
+/* Soft radial glow behind the photo */
+.photoGlow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 102, 204, 0.14) 0%,
+    rgba(129, 140, 248, 0.06) 50%,
+    transparent 70%
+  );
+  filter: blur(48px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── 3D tilt ────────────────────────────────────────────────────────────── */
+
+.tiltPerspective {
+  perspective: 900px;
+  position: relative;
+  z-index: 1;
+}
+
+.photoCard {
+  position: relative;
+  width: 300px;
+  height: 385px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  /* Card shadow — renders below the 3D card */
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.1))
+    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.06));
+}
+
+/* ─── Spinning gradient ring ─────────────────────────────────────────────── */
+
+/* Wrapper that clips the over-sized spinning ring */
+.photoClip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  /* 3px padding = ring thickness */
+  padding: 3px;
+}
+
+/* Large square with conic gradient — spins inside the clip */
+.photoRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Must exceed the diagonal of photoClip (300×385 → ~488px) */
+  width: 620px;
+  height: 620px;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    var(--accent) 0%,
+    #38bdf8 20%,
+    #818cf8 45%,
+    #c084fc 65%,
+    #f472b6 80%,
+    var(--accent) 100%
+  );
+  animation: ring-spin 7s linear infinite;
+  z-index: 0;
+}
+
+@keyframes ring-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
-.grid {
+/* Inner container: sits on top, creates the ring gap via the padding */
+.photoInner {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 340px;
-  height: auto;
+  height: 100%;
+  border-radius: 26px; /* 28 - 2 */
+  overflow: hidden;
+  background: var(--bg);
 }
 
-/* ─── Scroll hint ────────────────────────────────────────────────────────────*/
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Fallback when no photo file is found */
+.photoFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--bg) 100%);
+}
+
+.initials {
+  font-size: 80px;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--text-600) 0%, var(--text-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.initialsHint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-400);
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Floating chips ─────────────────────────────────────────────────────── */
+
+.chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px 7px 9px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+  z-index: 10;
+}
+
+.chipDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chipLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-600);
+  letter-spacing: 0.03em;
+}
+
+/* React chip — top right */
+.chipReact {
+  top: -14px;
+  right: -28px;
+  animation: float-up 3.8s ease-in-out infinite;
+}
+
+/* TypeScript chip — left side, vertically centered */
+.chipTs {
+  top: 50%;
+  left: -40px;
+  animation: float-left 4.2s ease-in-out infinite;
+}
+
+/* Next.js chip — bottom right */
+.chipNext {
+  bottom: 28px;
+  right: -32px;
+  animation: float-down 3.4s ease-in-out infinite;
+}
+
+@keyframes float-up {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-left {
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-7px);
+  }
+}
+
+@keyframes float-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+/* ─── Scroll hint ────────────────────────────────────────────────────────── */
 
 .scrollHint {
   position: absolute;
@@ -117,6 +413,7 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  z-index: 1;
 }
 
 .scrollDot {
@@ -124,4 +421,90 @@
   height: 5px;
   border-radius: 50%;
   background: var(--text-400);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 52px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .content {
+    align-items: center;
+    order: 2;
+  }
+
+  .tagline {
+    max-width: 100%;
+  }
+
+  /* Photo first on mobile */
+  .photoArea {
+    order: 1;
+  }
+
+  /* Center the name underline */
+  .name::after {
+    left: 50%;
+    width: 44%;
+    transform-origin: center;
+    animation: expand-center 0.9s var(--ease-out-expo) 0.55s both;
+  }
+
+  @keyframes expand-center {
+    from {
+      transform: translateX(-50%) scaleX(0);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(-50%) scaleX(1);
+      opacity: 1;
+    }
+  }
+
+  .photoCard {
+    width: 240px;
+    height: 308px;
+  }
+
+  .photoRing {
+    width: 500px;
+    height: 500px;
+  }
+
+  /* Hide left-side chip on small screens (overlaps text) */
+  .chipTs {
+    display: none;
+  }
+
+  .chipReact {
+    top: -12px;
+    right: -20px;
+  }
+
+  .chipNext {
+    bottom: 20px;
+    right: -20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .photoCard {
+    width: 210px;
+    height: 270px;
+  }
+
+  .photoRing {
+    width: 440px;
+    height: 440px;
+  }
+
+  .chipReact,
+  .chipNext {
+    display: none;
+  }
 }

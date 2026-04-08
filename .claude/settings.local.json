@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(dir \"C:\\\\Users\\\\cukan\\\\Desktop\\\\portfolio-build\\\\node_modules\\\\simple-icons\")"
     ]
   }
 }

@@ -10,8 +10,9 @@ export const stack: StackItem[] = [
   { name: "TypeScript", category: "Languages", icon: "typescript",   color: "#3178C6" },
   { name: "JavaScript", category: "Languages", icon: "javascript",   color: "#F7DF1E" },
   { name: "HTML5",      category: "Languages", icon: "html5",        color: "#E34F26" },
-  { name: "CSS3",       category: "Languages", icon: "css3",         color: "#1572B6" },
+  { name: "CSS3",       category: "Languages", icon: "css",          color: "#1572B6" },
   { name: "Sass",       category: "Languages", icon: "sass",         color: "#CC6699" },
+  { name: "Dart",       category: "Languages", icon: "dart",         color: "#0175C2" },
 
   // Frameworks
   { name: "React",          category: "Frameworks", icon: "react",        color: "#61DAFB" },
@@ -19,11 +20,13 @@ export const stack: StackItem[] = [
   { name: "Framer Motion",  category: "Frameworks", icon: "framer",       color: "#0055FF" },
   { name: "Node.js",        category: "Frameworks", icon: "nodedotjs",    color: "#339933" },
   { name: "Tailwind CSS",   category: "Frameworks", icon: "tailwindcss",  color: "#06B6D4" },
+  { name: "Flutter",        category: "Frameworks", icon: "flutter",      color: "#02569B" },
+  { name: "Ant Design",     category: "Frameworks", icon: "antdesign",    color: "#0170FE" },
 
   // Tooling
   { name: "Figma",   category: "Tooling", icon: "figma",   color: "#F24E1E" },
   { name: "Vite",    category: "Tooling", icon: "vite",    color: "#646CFF" },
   { name: "Git",     category: "Tooling", icon: "git",     color: "#F05032" },
   { name: "Vercel",  category: "Tooling", icon: "vercel",  color: "#888888" },
-  { name: "VS Code", category: "Tooling", icon: "visualstudiocode", color: "#007ACC" },
+  { name: "VS Code", category: "Tooling", icon: "vscode",           color: "#007ACC" },
 ];

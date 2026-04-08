@@ -1,0 +1,336 @@
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+}
+
+.heading {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-900);
+}
+
+.sub {
+  font-size: 15px;
+  color: var(--text-400);
+  line-height: 1.55;
+  max-width: 300px;
+  text-align: right;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 640px) {
+  .sub {
+    text-align: left;
+    max-width: 100%;
+  }
+}
+
+/* ─── Timeline container ─────────────────────────────────────────────────── */
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 20px 0 40px;
+}
+
+/* ─── Center line ────────────────────────────────────────────────────────── */
+
+.line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--border);
+}
+
+.lineFill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0%,
+    var(--border) 100%
+  );
+  transform-origin: top;
+}
+
+@media (max-width: 768px) {
+  .line {
+    left: 20px;
+  }
+}
+
+/* ─── Row (alternating sides) ────────────────────────────────────────────── */
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: start;
+  padding: 24px 0;
+}
+
+.rowLeft .yearLabel {
+  grid-column: 3;
+  grid-row: 1;
+  text-align: left;
+  padding-left: 8px;
+}
+
+.rowLeft .card {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.rowRight .yearLabel {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: right;
+  padding-right: 8px;
+}
+
+.rowRight .card {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.dot {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 48px;
+  }
+
+  .rowLeft .yearLabel,
+  .rowRight .yearLabel {
+    text-align: left;
+    padding: 0;
+  }
+
+  .dot {
+    position: absolute;
+    left: 20px;
+    top: 28px;
+    transform: translateX(-50%);
+  }
+}
+
+/* ─── Dot on timeline ────────────────────────────────────────────────────── */
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  z-index: 2;
+  position: relative;
+  flex-shrink: 0;
+  justify-self: center;
+  transition: border-color var(--duration-fast) ease;
+}
+
+.dotCurrent {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.dotPing {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.3;
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  75%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* ─── Year label ─────────────────────────────────────────────────────────── */
+
+.yearLabel {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-400);
+  letter-spacing: 0.04em;
+  padding-top: 18px;
+  white-space: nowrap;
+}
+
+/* ─── Card ───────────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo),
+    transform var(--duration-base) var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.card:hover::before,
+.cardExpanded::before {
+  transform: scaleX(1);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+.cardExpanded {
+  border-color: var(--border-hover);
+}
+
+/* ─── Card contents ──────────────────────────────────────────────────────── */
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.typeBadge {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 99px;
+  line-height: 1.4;
+}
+
+.typeBadge_education {
+  background: rgba(0, 102, 204, 0.08);
+  color: var(--accent);
+}
+
+.typeBadge_work {
+  background: rgba(52, 199, 89, 0.08);
+  color: var(--green);
+}
+
+.currentTag {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: var(--accent);
+  color: #fff;
+  line-height: 1.4;
+}
+
+.cardTitle {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-900);
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.cardSubtitle {
+  font-size: 13px;
+  color: var(--text-400);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.cardBody {
+  overflow: hidden;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: var(--text-600);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  padding-top: 14px;
+}
+
+/* ─── Expand button ──────────────────────────────────────────────────────── */
+
+.expandBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.expandBtn:hover {
+  opacity: 0.7;
+}
+
+.expandChevron {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 1;
+}

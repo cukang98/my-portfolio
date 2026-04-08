@@ -15,7 +15,7 @@ import { processSteps } from "@/data/process";
 export default function Process() {
   return (
     <SectionWrapper id="process">
-      <SectionLabel number="03" title="Process" />
+      <SectionLabel number="04" title="Process" />
       <div className={styles.header}>
         <h2 className={styles.heading}>How I work.</h2>
       </div>
