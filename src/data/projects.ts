@@ -51,7 +51,7 @@ export const projects: Project[] = [
     title: "Wizlah (Home Design Platform)",
     description:
       "An interactive home design platform that allows users to visualize and customize their living spaces in 3D. Features include furniture placement, layout adjustments, and project saving, similar to tools like IKEA Planner. Focused on delivering a smooth and engaging user experience for space planning.",
-    tags: ["React", "TypeScript", "3D", "WebGL"],
+    tags: ["React", "JavaScript", "3D", "WebGL"],
     url: "https://www.wizlah.com",
     images: [
       "/images/projects/p31.png",
@@ -61,7 +61,7 @@ export const projects: Project[] = [
       "/images/projects/p35.png",
     ],
     size: "medium",
-    year: 2023,
+    year: 2025,
   },
   {
     id: "project-four",
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     title: "WizMarketplace",
     description:
       "An e-commerce platform connecting furniture and home decor suppliers with buyers. Worked on frontend features including product listings, UI components, and performance optimizations to support scalable online shopping experiences.",
-    tags: ["React", "TypeScript", "E-commerce", "Ant Design"],
+    tags: ["React", "JavaScript", "E-commerce", "Material UI"],
     url: "https://www.wizmarketplace.com/",
     images: [
       "/images/projects/p51.png",
