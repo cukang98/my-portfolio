@@ -187,7 +187,7 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            04 / Contact
+            05 / Contact
           </motion.p>
 
           <AnimatedHeading text="Let's build something great." />
@@ -203,8 +203,9 @@ export default function Contact() {
               ease: [0.16, 1, 0.3, 1],
             }}
           >
-            I'm currently open to frontend roles where craft and attention to
-            detail actually matter. If that sounds like your team — let's talk.
+            I am open to frontend developer and React developer roles in
+            Singapore, especially teams building practical product interfaces
+            with React, Next.js, analytics, and API integrations.
           </motion.p>
 
           {/* Availability badge */}

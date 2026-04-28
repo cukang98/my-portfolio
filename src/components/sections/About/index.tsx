@@ -13,13 +13,32 @@ import styles from "./index.module.css";
 // data
 import { stack } from "@/data/stack";
 
-const TABS = ["All", "Languages", "Frameworks", "Tooling"] as const;
+const TABS = ["All", "Core", "Frontend", "Product"] as const;
 type Tab = (typeof TABS)[number];
 
 const stats = [
-  { value: "2+", label: "years building" },
-  { value: "7+", label: "projects shipped" },
-  { value: "∞", label: "tabs open" },
+  { value: "2.5+", label: "years frontend" },
+  { value: "5+", label: "products shipped" },
+  { value: "SG", label: "market experience" },
+];
+
+const strengths = [
+  {
+    title: "React product UI",
+    body: "Build maintainable screens for admin platforms, e-commerce flows, forms, tables, filters, dashboards, and responsive product pages.",
+  },
+  {
+    title: "Next.js implementation",
+    body: "Comfortable with App Router, Pages Router, SSR, SSG, ISR, CSR, middleware, dynamic routes, and SEO-facing metadata decisions.",
+  },
+  {
+    title: "Analytics and business signals",
+    body: "Implement GTM, dataLayer events, GA4 tracking, Firebase Analytics, and product/FAQ schema markup so frontend work supports measurable decisions.",
+  },
+  {
+    title: "AI-assisted delivery",
+    body: "Use tools like Codex and Claude Code to speed up implementation, debugging, refactoring, and review while keeping ownership of code quality.",
+  },
 ];
 
 export default function About() {
@@ -35,23 +54,26 @@ export default function About() {
         {/* ── Left: Bio ─────────────────────────────────────────── */}
         <div className={styles.bio}>
           <SectionLabel number="02" title="Skills" />
-          <h2 className={styles.heading}>Craft over output.</h2>
+          <h2 className={styles.heading}>
+            Frontend implementation with product context.
+          </h2>
 
           <div className={styles.body}>
             <p>
-              I'm a frontend developer who cares about the gap between working
-              and polished. I build interfaces with precision — not just to
-              spec, but to feel right.
+              I am a frontend developer focused on React and Next.js,
+              currently building production interfaces for Singapore-based
+              product teams.
             </p>
             <p>
-              My background spans design systems, interactive products, and
-              performance optimization. I bring structure to ambiguous problems
-              and clarity to complex UIs.
+              My work covers admin platforms, supplier systems, e-commerce
+              websites, responsive web, and mobile-related UI. I translate
+              Figma designs into reliable interfaces, integrate APIs, and keep
+              user flows clear even when the business logic is complex.
             </p>
             <p>
-              When I'm not coding, I'm reading about type design, obsessing over
-              animation curves, or taking things apart to understand how they
-              work.
+              I also care about the commercial side of frontend work:
+              performance, analytics, structured data, maintainability, and the
+              small UI details that make products easier to operate and scale.
             </p>
           </div>
 
@@ -73,6 +95,15 @@ export default function About() {
                 <span className={styles.statValue}>{value}</span>
                 <span className={styles.statLabel}>{label}</span>
               </motion.div>
+            ))}
+          </div>
+
+          <div className={styles.strengths}>
+            {strengths.map((item) => (
+              <article key={item.title} className={styles.strengthCard}>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
             ))}
           </div>
         </div>

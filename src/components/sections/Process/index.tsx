@@ -17,7 +17,7 @@ export default function Process() {
     <SectionWrapper id="process">
       <SectionLabel number="04" title="Process" />
       <div className={styles.header}>
-        <h2 className={styles.heading}>How I work.</h2>
+        <h2 className={styles.heading}>How I deliver frontend work.</h2>
       </div>
       <div className={styles.steps}>
         {processSteps.map((step, i) => (

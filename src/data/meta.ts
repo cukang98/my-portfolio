@@ -1,10 +1,10 @@
 export const meta = {
   name: "Hi, I'm Cu Kang",
-  role: "Frontend Developer",
+  role: "Frontend Developer · React / Next.js",
   tagline: [
-    "I build interfaces that feel inevitable. ✨",
-    "I make complex things look simple 🧩",
-    "I debug faster than I panic 🐛💨",
+    "I build responsive React interfaces from Figma to production.",
+    "I work across admin platforms, e-commerce, analytics, and API-heavy UI.",
+    "I turn frontend implementation into measurable product and business value.",
   ],
   available: true,
   email: "cukang98@gmail.com",

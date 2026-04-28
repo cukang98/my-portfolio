@@ -13,9 +13,10 @@ export default function Work() {
     <SectionWrapper id="work">
       <SectionLabel number="01" title="Work" />
       <div className={styles.header}>
-        <h2 className={styles.heading}>Selected projects</h2>
+        <h2 className={styles.heading}>Selected frontend work</h2>
         <p className={styles.sub}>
-          A focused set of work — each one a different problem, the same standard.
+          Product work across admin platforms, e-commerce, analytics, and
+          responsive UI implementation.
         </p>
       </div>
       <BentoGrid />

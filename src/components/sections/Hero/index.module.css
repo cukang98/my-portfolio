@@ -123,6 +123,14 @@
   max-width: 400px;
 }
 
+.summary {
+  max-width: 620px;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.65;
+  color: var(--text-600);
+  letter-spacing: -0.02em;
+}
+
 .cursor {
   display: inline-block;
   margin-left: 1px;
@@ -179,6 +187,44 @@
   color: var(--border-hover);
 }
 
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: min(100%, 540px);
+  padding-top: 4px;
+}
+
+.metric {
+  min-height: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+}
+
+.metricValue {
+  font-size: 24px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-900);
+}
+
+.metricLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-400);
+}
+
 /* ─── Right: photo area ──────────────────────────────────────────────────── */
 
 .photoArea {
@@ -232,7 +278,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 28px;
+  border-radius: 14px;
   overflow: hidden;
   /* 3px padding = ring thickness */
   padding: 3px;
@@ -272,7 +318,7 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-  border-radius: 26px; /* 28 - 2 */
+  border-radius: 12px;
   overflow: hidden;
   background: var(--bg);
 }
@@ -442,6 +488,10 @@
     max-width: 100%;
   }
 
+  .summary {
+    max-width: 620px;
+  }
+
   /* Photo first on mobile */
   .photoArea {
     order: 1;
@@ -493,6 +543,10 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding-top: 72px;
+  }
+
   .photoCard {
     width: 210px;
     height: 270px;
@@ -506,5 +560,15 @@
   .chipReact,
   .chipNext {
     display: none;
+  }
+
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .metric {
+    min-height: auto;
+    align-items: center;
+    padding: 14px;
   }
 }

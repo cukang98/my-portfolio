@@ -50,7 +50,7 @@
 .links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 22px;
 }
 
 @media (max-width: 640px) {

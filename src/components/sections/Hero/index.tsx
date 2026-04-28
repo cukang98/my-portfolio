@@ -146,8 +146,8 @@ function PhotoCard({
           delay={0.85}
         />
         <FloatingChip
-          label="TypeScript"
-          color="#3178C6"
+          label="GTM / GA4"
+          color="#246FDB"
           className={styles.chipTs}
           delay={1.0}
         />
@@ -237,9 +237,22 @@ export default function Hero() {
             <Typewriter lines={meta.tagline} />
           </motion.p>
 
+          <motion.p
+            className={styles.summary}
+            custom={0.3}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+          >
+            Singapore-based frontend developer with 2.5+ years of experience
+            building React and Next.js products for admin platforms,
+            e-commerce, analytics-heavy flows, and responsive interfaces from
+            Figma designs.
+          </motion.p>
+
           <motion.div
             className={styles.ctas}
-            custom={0.34}
+            custom={0.38}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
@@ -254,12 +267,12 @@ export default function Hero() {
 
           <motion.div
             className={styles.stack}
-            custom={0.44}
+            custom={0.48}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
           >
-            {["React", "TypeScript", "Next.js", "Framer Motion"].map(
+            {["React", "Next.js", "TypeScript", "GTM", "Firebase"].map(
               (tech, i) => (
                 <span key={tech} className={styles.stackItem}>
                   {i > 0 && <span className={styles.stackSep}>·</span>}
@@ -267,6 +280,27 @@ export default function Hero() {
                 </span>
               ),
             )}
+          </motion.div>
+
+          <motion.div
+            className={styles.metrics}
+            custom={0.58}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className={styles.metric}>
+              <span className={styles.metricValue}>2.5+</span>
+              <span className={styles.metricLabel}>years frontend</span>
+            </div>
+            <div className={styles.metric}>
+              <span className={styles.metricValue}>5</span>
+              <span className={styles.metricLabel}>featured products</span>
+            </div>
+            <div className={styles.metric}>
+              <span className={styles.metricValue}>SG</span>
+              <span className={styles.metricLabel}>based experience</span>
+            </div>
           </motion.div>
         </div>
 

@@ -9,7 +9,8 @@ import styles from "./index.module.css";
 const navLinks = [
   { href: "#work", label: "Work" },
   { href: "#skills", label: "Skills" },
-  { href: "#about", label: "About" },
+  { href: "#about", label: "Experience" },
+  { href: "#process", label: "Process" },
   { href: "#contact", label: "Contact" },
 ];
 

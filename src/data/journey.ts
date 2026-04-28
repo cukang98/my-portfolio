@@ -37,7 +37,7 @@ export const journey: JourneyEntry[] = [
     title: "Frontend Developer",
     subtitle: "Wizlah Venture Pte Ltd, Singapore",
     description:
-      "Working on admin platforms and e-commerce systems using React and TypeScript. Contributed to building and maintaining complex modules such as order management, voucher systems, and supplier workflows, while improving UI consistency and performance.",
+      "Building React and TypeScript interfaces for admin platforms, e-commerce products, supplier workflows, and mobile-related product surfaces. Work includes API integration, UI implementation from Figma, performance improvements, Firebase/Cloud Functions collaboration, analytics tracking with GTM and GA4, and product/FAQ schema markup.",
     type: "work",
     current: true,
   },

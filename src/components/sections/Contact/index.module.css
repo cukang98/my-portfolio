@@ -139,7 +139,7 @@
   padding: 28px 24px 24px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 8px;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -229,7 +229,7 @@
 .iconWrap {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;

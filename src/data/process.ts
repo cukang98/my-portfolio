@@ -7,22 +7,22 @@ export interface ProcessStep {
 export const processSteps: ProcessStep[] = [
   {
     number: "01",
-    title: "Understand",
-    body: "Before touching a file, I map the problem — user goals, constraints, and what success actually looks like. Good interfaces start with good questions.",
+    title: "Clarify the workflow",
+    body: "I start by understanding the user flow, business rules, API shape, analytics needs, and design intent before breaking the work into frontend tasks.",
   },
   {
     number: "02",
-    title: "Architect",
-    body: "Structure first. I plan component boundaries, data flow, and state before writing markup. This keeps the implementation honest and refactoring rare.",
+    title: "Build the interface",
+    body: "I translate Figma into responsive React UI with maintainable components, predictable state, accessible controls, and clear loading or error states.",
   },
   {
     number: "03",
-    title: "Refine",
-    body: "The gap between working and polished is where I live. Motion, spacing, micro-interactions — these details are not decoration, they are the product.",
+    title: "Connect product signals",
+    body: "I integrate APIs, GTM dataLayer events, GA4 tracking, Firebase touchpoints, schema markup, and performance improvements where the product needs them.",
   },
   {
     number: "04",
-    title: "Ship",
-    body: "Deployed code beats perfect code. I optimize for performance, accessibility, and maintainability — then I release and iterate.",
+    title: "Use AI responsibly",
+    body: "I use Codex and Claude Code to accelerate implementation, debugging, review, and refactoring, then validate the output through my own testing and code judgment.",
   },
 ];

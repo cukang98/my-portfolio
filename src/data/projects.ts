@@ -4,7 +4,10 @@ export type ProjectType = "web" | "mobile";
 export interface Project {
   id: string;
   title: string;
+  role: string;
   description: string;
+  impact: string;
+  highlights: string[];
   tags: string[];
   url?: string;
   repo?: string;
@@ -18,9 +21,17 @@ export const projects: Project[] = [
   {
     id: "project-one",
     title: "Wizlah Super Admin",
+    role: "Frontend developer on product team",
     description:
-      "A centralized internal platform used to manage multiple products including Wizlah and WizService. Built and maintained core modules such as order transactions, voucher management, return & refund workflows, and campaign configurations. Focused on handling complex business logic, scalable state management, and reusable UI components for operational efficiency.",
-    tags: ["React", "TypeScript", "Ant Design", "Less", "Redux"],
+      "A centralized operations platform for managing multiple Wizlah products, business workflows, transactions, campaigns, and support processes.",
+    impact:
+      "Improved operational efficiency by turning complex internal workflows into reusable, searchable, and maintainable admin modules.",
+    highlights: [
+      "Built order transaction, voucher, campaign, return, and refund modules.",
+      "Implemented complex table, filter, form, and CRUD experiences with Ant Design.",
+      "Handled role-sensitive admin workflows, reusable UI patterns, and scalable state management.",
+    ],
+    tags: ["React", "TypeScript", "Ant Design", "Less", "Redux", "Admin UI"],
     images: [
       "/images/projects/p1_1.png",
       "/images/projects/p1_2.png",
@@ -34,10 +45,17 @@ export const projects: Project[] = [
   {
     id: "project-two",
     title: "Wizlah Supplier Admin",
+    role: "Frontend developer on product team",
     description:
-      "A supplier-facing admin platform supporting onboarding, voucher tracking, return & refund handling, and operational workflows. Contributed to UI revamp and improved usability across web interfaces, ensuring smooth supplier management and better data visibility.",
-    tags: ["React", "TypeScript", "Ant Design", "Less"],
-    url: "https://example.com",
+      "A supplier-facing platform for onboarding, voucher tracking, return and refund handling, and day-to-day supplier operations.",
+    impact:
+      "Helped suppliers manage marketplace tasks with clearer data visibility, cleaner UI flows, and more consistent operational screens.",
+    highlights: [
+      "Contributed to UI revamp work across supplier management screens.",
+      "Built responsive admin interfaces for forms, tables, filters, and workflow states.",
+      "Integrated frontend views with backend APIs for operational data and status updates.",
+    ],
+    tags: ["React", "TypeScript", "Ant Design", "Less", "API Integration"],
     images: [
       "/images/projects/p2_1.png",
       "/images/projects/p2_2.png",
@@ -49,9 +67,17 @@ export const projects: Project[] = [
   {
     id: "project-three",
     title: "Wizlah (Home Design Platform)",
+    role: "Frontend developer on product team",
     description:
-      "An interactive home design platform that allows users to visualize and customize their living spaces in 3D. Features include furniture placement, layout adjustments, and project saving, similar to tools like IKEA Planner. Focused on delivering a smooth and engaging user experience for space planning.",
-    tags: ["React", "JavaScript", "3D", "WebGL"],
+      "A consumer home design platform that lets users visualize layouts, customize living spaces, and interact with 3D planning experiences.",
+    impact:
+      "Supported a more engaging product discovery journey by connecting interactive room planning with a polished responsive web experience.",
+    highlights: [
+      "Worked on responsive UI implementation from design references.",
+      "Supported interactive product and space-planning experiences in the browser.",
+      "Contributed to frontend performance improvements for smoother user interactions.",
+    ],
+    tags: ["React", "JavaScript", "3D", "WebGL", "Responsive UI"],
     url: "https://www.wizlah.com",
     images: [
       "/images/projects/p31.png",
@@ -66,9 +92,17 @@ export const projects: Project[] = [
   {
     id: "project-four",
     title: "Wizlah App",
+    role: "Mobile UI contributor",
     description:
-      "A mobile application built with Flutter that complements the Wizlah ecosystem. Contributed to UI development and onboarding flows, ensuring responsive layouts and smooth user interactions across devices.",
-    tags: ["Flutter", "Dart", "Responsive UI"],
+      "A mobile app experience that complements the Wizlah ecosystem with onboarding, product discovery, and user-facing flows.",
+    impact:
+      "Extended product coverage beyond web by contributing mobile UI screens and smoother onboarding interactions.",
+    highlights: [
+      "Contributed to mobile UI development and onboarding flows.",
+      "Adjusted layouts for different mobile screen sizes and interaction patterns.",
+      "Collaborated across web and mobile product surfaces for a consistent user experience.",
+    ],
+    tags: ["Flutter", "Dart", "Mobile UI", "Responsive UI"],
     url: "https://apps.apple.com/sg/app/wizlah/id1616865876",
     type: "mobile",
     images: [
@@ -85,9 +119,17 @@ export const projects: Project[] = [
   {
     id: "project-five",
     title: "WizMarketplace",
+    role: "Frontend developer on product team",
     description:
-      "An e-commerce platform connecting furniture and home decor suppliers with buyers. Worked on frontend features including product listings, UI components, and performance optimizations to support scalable online shopping experiences.",
-    tags: ["React", "JavaScript", "E-commerce", "Material UI"],
+      "An e-commerce platform connecting furniture and home decor suppliers with buyers through product discovery, checkout, and order flows.",
+    impact:
+      "Helped improve shopping journeys by building product, cart, checkout, SEO, analytics, and performance-focused frontend features.",
+    highlights: [
+      "Worked on product listing, product detail, cart, checkout, and order-related UI.",
+      "Implemented event tracking, dataLayer setup, and GA4/GTM integration for business visibility.",
+      "Supported product and FAQ schema markup for stronger search presentation.",
+    ],
+    tags: ["React", "JavaScript", "Material UI", "E-commerce", "GTM", "Schema"],
     url: "https://www.wizmarketplace.com/",
     images: [
       "/images/projects/p51.png",

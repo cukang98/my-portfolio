@@ -18,7 +18,7 @@ import { journey, JourneyEntry } from "@/data/journey";
 function TypeBadge({ type }: { type: JourneyEntry["type"] }) {
   return (
     <span className={`${styles.typeBadge} ${styles[`typeBadge_${type}`]}`}>
-      {type === "education" ? "🎓" : "💼"} {type}
+      {type}
     </span>
   );
 }
@@ -123,9 +123,10 @@ export default function Journey() {
     <SectionWrapper id="about">
       <SectionLabel number="03" title="About" />
       <div className={styles.header}>
-        <h2 className={styles.heading}>About my journey ...</h2>
+        <h2 className={styles.heading}>Experience and education</h2>
         <p className={styles.sub}>
-          A timeline of the milestones that shaped how I think and build.
+          The path behind my frontend work, from software foundations to
+          product implementation in Singapore.
         </p>
       </div>
 

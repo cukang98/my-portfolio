@@ -205,7 +205,19 @@ function SpotlightPanel ({ project }: { project: Project }) {
         </div>
 
         <h3 className={styles.spotlightTitle}>{project.title}</h3>
+        <p className={styles.spotlightRole}>{project.role}</p>
         <p className={styles.spotlightDesc}>{project.description}</p>
+
+        <div className={styles.impactBox}>
+          <span className={styles.impactLabel}>Business value</span>
+          <p>{project.impact}</p>
+        </div>
+
+        <ul className={styles.highlightList}>
+          {project.highlights.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
 
         <div className={styles.spotlightTags}>
           {project.tags.map(tag => (
@@ -258,7 +270,7 @@ function ProjectListItem ({
       <div className={styles.listContent}>
         <span className={styles.listTitle}>{project.title}</span>
         <span className={styles.listSub}>
-          {project.tags.slice(0, 2).join(' · ')}
+          {project.role}
         </span>
       </div>
 

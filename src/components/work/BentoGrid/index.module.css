@@ -31,7 +31,7 @@
 .spotlightPanel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.04);
 }
@@ -325,11 +325,73 @@
   color: var(--text-900);
 }
 
+.spotlightRole {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
 .spotlightDesc {
   font-size: 15px;
   color: var(--text-600);
   line-height: 1.6;
   letter-spacing: -0.01em;
+}
+
+.impactBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid rgba(0, 102, 204, 0.16);
+  border-radius: 8px;
+  background: rgba(0, 102, 204, 0.045);
+}
+
+.impactLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.impactBox p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-700, var(--text-600));
+  letter-spacing: -0.01em;
+}
+
+.highlightList {
+  display: grid;
+  gap: 8px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.highlightList li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-600);
+  letter-spacing: -0.01em;
+}
+
+.highlightList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .spotlightTags {
@@ -370,7 +432,7 @@
   align-items: center;
   gap: 12px;
   padding: 14px 16px 14px 20px;
-  border-radius: 14px;
+  border-radius: 8px;
   background: transparent;
   border: 1px solid transparent;
   cursor: pointer;
