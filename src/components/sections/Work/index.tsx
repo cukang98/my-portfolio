@@ -11,12 +11,17 @@ import styles from "./index.module.css";
 export default function Work() {
   return (
     <SectionWrapper id="work">
-      <SectionLabel number="01" title="Work" />
+      <SectionLabel number="02" title="Work" />
       <div className={styles.header}>
-        <h2 className={styles.heading}>Selected frontend work</h2>
+        <div>
+          <h2 className={styles.heading}>Selected frontend work</h2>
+          <p className={styles.kicker}>
+            Work projects for now. Side projects have a spot waiting for them.
+          </p>
+        </div>
         <p className={styles.sub}>
-          Product work across admin platforms, e-commerce, analytics, and
-          responsive UI implementation.
+          The work stuff is more polished. The side-project space is where I
+          can try things out and figure stuff out. 🧪
         </p>
       </div>
       <BentoGrid />

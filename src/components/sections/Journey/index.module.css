@@ -5,30 +5,31 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
 }
 
 @media (max-width: 640px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
   }
 }
 
 .heading {
-  font-size: clamp(28px, 4vw, 40px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
   color: var(--text-900);
 }
 
 .sub {
   font-size: 15px;
-  color: var(--text-400);
-  line-height: 1.55;
-  max-width: 300px;
+  color: var(--text-500);
+  line-height: 1.65;
+  max-width: 320px;
   text-align: right;
   letter-spacing: -0.01em;
 }
@@ -40,297 +41,352 @@
   }
 }
 
-/* ─── Timeline container ─────────────────────────────────────────────────── */
+/* ─── Section divider (Now / Earlier) ────────────────────────────────────── */
 
-.timeline {
-  position: relative;
+.divider {
   display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 20px 0 40px;
+  align-items: center;
+  gap: 14px;
+  margin: 32px 0 18px;
 }
 
-/* ─── Center line ────────────────────────────────────────────────────────── */
+.divider:first-of-type {
+  margin-top: 12px;
+}
 
-.line {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  transform: translateX(-50%);
+.dividerRule {
+  flex: 1;
+  height: 1px;
   background: var(--border);
 }
 
-.lineFill {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    var(--accent) 0%,
-    var(--border) 100%
-  );
-  transform-origin: top;
-}
-
-@media (max-width: 768px) {
-  .line {
-    left: 20px;
-  }
-}
-
-/* ─── Row (alternating sides) ────────────────────────────────────────────── */
-
-.row {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 24px;
-  align-items: start;
-  padding: 24px 0;
-}
-
-.rowLeft .yearLabel {
-  grid-column: 3;
-  grid-row: 1;
-  text-align: left;
-  padding-left: 8px;
-}
-
-.rowLeft .card {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.rowRight .yearLabel {
-  grid-column: 1;
-  grid-row: 1;
-  text-align: right;
-  padding-right: 8px;
-}
-
-.rowRight .card {
-  grid-column: 3;
-  grid-row: 1;
-}
-
-.dot {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: start;
-  margin-top: 18px;
-}
-
-@media (max-width: 768px) {
-  .row {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-left: 48px;
-  }
-
-  .rowLeft .yearLabel,
-  .rowRight .yearLabel {
-    text-align: left;
-    padding: 0;
-  }
-
-  .dot {
-    position: absolute;
-    left: 20px;
-    top: 28px;
-    transform: translateX(-50%);
-  }
-}
-
-/* ─── Dot on timeline ────────────────────────────────────────────────────── */
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--border);
-  z-index: 2;
-  position: relative;
-  flex-shrink: 0;
-  justify-self: center;
-  transition: border-color var(--duration-fast) ease;
-}
-
-.dotCurrent {
-  border-color: var(--accent);
-  background: var(--accent);
-}
-
-.dotPing {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.3;
-  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-@keyframes ping {
-  0% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-  75%,
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
-
-/* ─── Year label ─────────────────────────────────────────────────────────── */
-
-.yearLabel {
+.dividerLabel {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--text-400);
-  letter-spacing: 0.04em;
-  padding-top: 18px;
-  white-space: nowrap;
+  padding: 0 4px;
 }
 
-/* ─── Card ───────────────────────────────────────────────────────────────── */
+/* ─── Spotlight card (current role) ──────────────────────────────────────── */
 
-.card {
+.spotlight {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 24px;
-  cursor: pointer;
-  transition:
-    border-color var(--duration-fast) var(--ease-out-expo),
-    box-shadow var(--duration-base) var(--ease-out-expo),
-    transform var(--duration-base) var(--ease-out-expo);
-  position: relative;
+  border-radius: 12px;
+  padding: clamp(24px, 3vw, 36px);
   overflow: hidden;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  transition:
+    border-color var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo);
 }
 
-.card::before {
-  content: '';
+.spotlight::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 2px;
   background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--duration-base) var(--ease-out-expo);
 }
 
-.card:hover::before,
-.cardExpanded::before {
-  transform: scaleX(1);
+.spotlight:hover {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  box-shadow: var(--shadow-soft);
 }
 
-.card:hover {
-  border-color: var(--border-hover);
-}
-
-.cardExpanded {
-  border-color: var(--border-hover);
-}
-
-/* ─── Card contents ──────────────────────────────────────────────────────── */
-
-.cardHeader {
+.spotlightHead {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.presentTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--green) 10%, transparent);
+}
+
+.presentDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent);
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-500);
+  font-variant-numeric: tabular-nums;
+}
+
+.spotlightRole {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--text-900);
+  margin-bottom: 6px;
+}
+
+.spotlightOrg {
+  font-size: 14px;
+  color: var(--text-500);
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+
+.dotSep {
+  color: var(--text-400);
+  margin: 0 4px;
+}
+
+.spotlightSummary {
+  font-size: 16px;
+  color: var(--text-700);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  margin-bottom: 22px;
+  max-width: 60ch;
+}
+
+/* ─── Focus block (current role only) ────────────────────────────────────── */
+
+.focusBlock {
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+  margin-bottom: 22px;
+}
+
+.focusLabel {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-400);
+  margin-bottom: 10px;
+}
+
+.focusLead {
+  font-size: 14px;
+  color: var(--text-700);
+  font-weight: 500;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 
-.typeBadge {
-  font-size: 10px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 8px;
-  border-radius: 99px;
-  line-height: 1.4;
+.highlights {
+  list-style: none;
+  display: grid;
+  gap: 8px;
 }
 
-.typeBadge_education {
-  background: rgba(0, 102, 204, 0.08);
+.highlights li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-600);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+
+.bullet {
   color: var(--accent);
+  font-weight: 600;
+  line-height: 1.55;
 }
 
-.typeBadge_work {
-  background: rgba(52, 199, 89, 0.08);
-  color: var(--green);
+/* ─── Past entries rail ──────────────────────────────────────────────────── */
+
+.rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.currentTag {
-  font-size: 10px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 8px;
-  border-radius: 99px;
-  background: var(--accent);
-  color: #fff;
-  line-height: 1.4;
+.rail::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 5px;
+  width: 1px;
+  background: var(--border);
 }
 
-.cardTitle {
-  font-size: 17px;
+/* ─── Past row ───────────────────────────────────────────────────────────── */
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  gap: 28px;
+  padding: 22px 0 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowDot {
+  position: absolute;
+  left: 0;
+  top: 30px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  z-index: 1;
+  transition: border-color var(--duration-fast) ease;
+}
+
+.row:hover .rowDot {
+  border-color: var(--text-400);
+}
+
+.rowMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding-top: 22px;
+}
+
+.rowBody {
+  display: grid;
+  gap: 6px;
+}
+
+.rowRole {
+  font-family: var(--font-display);
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--text-900);
   line-height: 1.25;
+  color: var(--text-900);
+}
+
+.rowOrg {
+  font-size: 13px;
+  color: var(--text-500);
+  letter-spacing: -0.01em;
   margin-bottom: 4px;
 }
 
-.cardSubtitle {
-  font-size: 13px;
-  color: var(--text-400);
-  letter-spacing: -0.01em;
+.rowSummary {
+  font-size: 14px;
+  color: var(--text-600);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  margin-bottom: 10px;
+  max-width: 60ch;
+}
+
+/* ─── Type tag (Work / Education) ────────────────────────────────────────── */
+
+.typeTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  border-radius: 4px;
   line-height: 1.4;
 }
 
-.cardBody {
-  overflow: hidden;
+.typeTag_work {
+  background: color-mix(in srgb, var(--green) 10%, transparent);
+  color: var(--green);
 }
 
-.cardDesc {
-  font-size: 14px;
-  color: var(--text-600);
-  line-height: 1.7;
-  letter-spacing: -0.01em;
-  padding-top: 14px;
-}
-
-/* ─── Expand button ──────────────────────────────────────────────────────── */
-
-.expandBtn {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 12px;
-  font-size: 12px;
-  font-weight: 500;
+.typeTag_education {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--accent);
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  transition: opacity var(--duration-fast) ease;
 }
 
-.expandBtn:hover {
-  opacity: 0.7;
+/* ─── Chips (tag row) ────────────────────────────────────────────────────── */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.expandChevron {
-  display: inline-block;
-  font-size: 11px;
-  line-height: 1;
+.chip {
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--text-600);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+  transition:
+    background var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-out-expo);
+}
+
+.chip:hover {
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, white);
+  color: var(--text-900);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 20px 0 20px 22px;
+  }
+
+  .rowMeta {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding-top: 0;
+  }
+
+  .rowDot {
+    top: 26px;
+  }
+
+  .spotlightHead {
+    margin-bottom: 14px;
+  }
+
+  .spotlightSummary {
+    font-size: 15px;
+  }
 }

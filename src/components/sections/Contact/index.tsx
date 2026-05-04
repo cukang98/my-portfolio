@@ -13,7 +13,14 @@ import { meta } from "@/data/meta";
 
 function MailIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <rect x="2" y="4" width="20" height="16" rx="3" />
       <path d="M2 7l10 7 10-7" />
     </svg>
@@ -38,7 +45,14 @@ function LinkedInIcon() {
 
 function ArrowUpRightIcon() {
   return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M3 13L13 3M13 3H6M13 3v7" />
     </svg>
   );
@@ -152,7 +166,7 @@ export default function Contact() {
       icon: <MailIcon />,
       label: "Email",
       handle: meta.email,
-      description: "Best for opportunities & collaborations",
+      description: "Best way to reach me",
       accentClass: styles.accentMail,
     },
     {
@@ -168,8 +182,10 @@ export default function Contact() {
       href: meta.links.linkedin,
       icon: <LinkedInIcon />,
       label: "LinkedIn",
-      handle: meta.links.linkedin.replace("https://www.linkedin.com/in/", "@").replace(/\/$/, ""),
-      description: "Let's connect professionally",
+      handle: meta.links.linkedin
+        .replace("https://www.linkedin.com/in/", "@")
+        .replace(/\/$/, ""),
+      description: "Work updates and messages",
       external: true,
       accentClass: styles.accentLinkedin,
     },
@@ -187,10 +203,10 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            05 / Contact
+            06 / Contact
           </motion.p>
 
-          <AnimatedHeading text="Let's build something great." />
+          <AnimatedHeading text="Want to build something useful?" />
 
           <motion.p
             className={styles.sub}
@@ -203,9 +219,9 @@ export default function Contact() {
               ease: [0.16, 1, 0.3, 1],
             }}
           >
-            I am open to frontend developer and React developer roles in
-            Singapore, especially teams building practical product interfaces
-            with React, Next.js, analytics, and API integrations.
+            Currently open to frontend roles in Singapore — mostly interested in
+            teams building real product UI with React, Next.js, analytics, and
+            API-driven flows.
           </motion.p>
 
           {/* Availability badge */}

@@ -7,9 +7,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./index.module.css";
 
 const navLinks = [
+  { href: "#about", label: "About" },
   { href: "#work", label: "Work" },
   { href: "#skills", label: "Skills" },
-  { href: "#about", label: "Experience" },
+  { href: "#experience", label: "Experience" },
   { href: "#process", label: "Process" },
   { href: "#contact", label: "Contact" },
 ];

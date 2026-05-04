@@ -33,6 +33,7 @@ function ImageGallery ({ images, size }: { images: string[]; size: string }) {
   return (
     <div className={`${styles.imageArea} ${styles[`imageArea_${size}`] ?? ''}`}>
       {images.map((src, i) => (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           key={src}
           src={src}

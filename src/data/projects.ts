@@ -1,9 +1,20 @@
 export type ProjectSize = "featured" | "medium" | "small";
 export type ProjectType = "web" | "mobile";
+export type ProjectCategory = "professional" | "independent";
+export type ProjectKind =
+  | "Admin Platform"
+  | "Supplier Tool"
+  | "Consumer Web"
+  | "Mobile Product"
+  | "E-commerce"
+  | "Personal Build"
+  | "Experiment";
 
 export interface Project {
   id: string;
   title: string;
+  category: ProjectCategory;
+  kind: ProjectKind;
   role: string;
   description: string;
   impact: string;
@@ -21,15 +32,17 @@ export const projects: Project[] = [
   {
     id: "project-one",
     title: "Wizlah Super Admin",
+    category: "professional",
+    kind: "Admin Platform",
     role: "Frontend developer on product team",
     description:
-      "A centralized operations platform for managing multiple Wizlah products, business workflows, transactions, campaigns, and support processes.",
+      "A centralized operations platform for managing Wizlah products, transactions, campaigns, returns, refunds, and support workflows.",
     impact:
-      "Improved operational efficiency by turning complex internal workflows into reusable, searchable, and maintainable admin modules.",
+      "Turned complex internal workflows into reusable, searchable, and maintainable admin modules for operations teams.",
     highlights: [
-      "Built order transaction, voucher, campaign, return, and refund modules.",
-      "Implemented complex table, filter, form, and CRUD experiences with Ant Design.",
-      "Handled role-sensitive admin workflows, reusable UI patterns, and scalable state management.",
+      "Built transaction, voucher, campaign, return, and refund modules.",
+      "Implemented dense table, filter, form, and CRUD experiences with Ant Design.",
+      "Shaped role-sensitive workflows, reusable UI patterns, and scalable state management.",
     ],
     tags: ["React", "TypeScript", "Ant Design", "Less", "Redux", "Admin UI"],
     images: [
@@ -45,15 +58,17 @@ export const projects: Project[] = [
   {
     id: "project-two",
     title: "Wizlah Supplier Admin",
+    category: "professional",
+    kind: "Supplier Tool",
     role: "Frontend developer on product team",
     description:
-      "A supplier-facing platform for onboarding, voucher tracking, return and refund handling, and day-to-day supplier operations.",
+      "A supplier-facing platform for onboarding, voucher tracking, return handling, refunds, and day-to-day marketplace operations.",
     impact:
-      "Helped suppliers manage marketplace tasks with clearer data visibility, cleaner UI flows, and more consistent operational screens.",
+      "Improved supplier task visibility with clearer workflows, cleaner UI states, and more consistent operational screens.",
     highlights: [
       "Contributed to UI revamp work across supplier management screens.",
-      "Built responsive admin interfaces for forms, tables, filters, and workflow states.",
-      "Integrated frontend views with backend APIs for operational data and status updates.",
+      "Built responsive forms, tables, filters, and workflow status views.",
+      "Integrated frontend screens with APIs for operational data and status updates.",
     ],
     tags: ["React", "TypeScript", "Ant Design", "Less", "API Integration"],
     images: [
@@ -67,11 +82,13 @@ export const projects: Project[] = [
   {
     id: "project-three",
     title: "Wizlah (Home Design Platform)",
+    category: "professional",
+    kind: "Consumer Web",
     role: "Frontend developer on product team",
     description:
-      "A consumer home design platform that lets users visualize layouts, customize living spaces, and interact with 3D planning experiences.",
+      "A consumer home design platform for visualizing layouts, customizing living spaces, and exploring browser-based planning experiences.",
     impact:
-      "Supported a more engaging product discovery journey by connecting interactive room planning with a polished responsive web experience.",
+      "Connected interactive room planning with a polished responsive web experience for stronger product discovery.",
     highlights: [
       "Worked on responsive UI implementation from design references.",
       "Supported interactive product and space-planning experiences in the browser.",
@@ -92,14 +109,16 @@ export const projects: Project[] = [
   {
     id: "project-four",
     title: "Wizlah App",
+    category: "professional",
+    kind: "Mobile Product",
     role: "Mobile UI contributor",
     description:
       "A mobile app experience that complements the Wizlah ecosystem with onboarding, product discovery, and user-facing flows.",
     impact:
-      "Extended product coverage beyond web by contributing mobile UI screens and smoother onboarding interactions.",
+      "Extended product coverage beyond web with mobile UI screens and smoother onboarding interactions.",
     highlights: [
       "Contributed to mobile UI development and onboarding flows.",
-      "Adjusted layouts for different mobile screen sizes and interaction patterns.",
+      "Adjusted layouts for different mobile screen sizes and interaction states.",
       "Collaborated across web and mobile product surfaces for a consistent user experience.",
     ],
     tags: ["Flutter", "Dart", "Mobile UI", "Responsive UI"],
@@ -119,11 +138,13 @@ export const projects: Project[] = [
   {
     id: "project-five",
     title: "WizMarketplace",
+    category: "professional",
+    kind: "E-commerce",
     role: "Frontend developer on product team",
     description:
-      "An e-commerce platform connecting furniture and home decor suppliers with buyers through product discovery, checkout, and order flows.",
+      "An e-commerce platform connecting furniture and home decor suppliers with buyers through discovery, checkout, and order flows.",
     impact:
-      "Helped improve shopping journeys by building product, cart, checkout, SEO, analytics, and performance-focused frontend features.",
+      "Improved shopping journeys through product, cart, checkout, SEO, analytics, and performance-focused frontend work.",
     highlights: [
       "Worked on product listing, product detail, cart, checkout, and order-related UI.",
       "Implemented event tracking, dataLayer setup, and GA4/GTM integration for business visibility.",
@@ -141,3 +162,12 @@ export const projects: Project[] = [
     year: 2023,
   },
 ];
+
+export const professionalProjects = projects.filter(
+  (project) => project.category === "professional",
+);
+
+// TODO: Add independent side projects once they are ready to feature publicly.
+export const independentProjects = projects.filter(
+  (project) => project.category === "independent",
+);

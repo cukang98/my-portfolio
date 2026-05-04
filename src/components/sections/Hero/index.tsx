@@ -244,10 +244,9 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
           >
-            Singapore-based frontend developer with 2.5+ years of experience
-            building React and Next.js products for admin platforms,
-            e-commerce, analytics-heavy flows, and responsive interfaces from
-            Figma designs.
+            Frontend developer with 2.5+ years of experience building React and
+            Next.js applications, focused on maintainable UI, predictable state,
+            and real-world product usage.
           </motion.p>
 
           <motion.div

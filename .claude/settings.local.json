@@ -3,7 +3,13 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm uninstall:*)",
-      "Bash(dir \"C:\\\\Users\\\\cukan\\\\Desktop\\\\portfolio-build\\\\node_modules\\\\simple-icons\")"
+      "Bash(dir \"C:\\\\Users\\\\cukan\\\\Desktop\\\\portfolio-build\\\\node_modules\\\\simple-icons\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\cukan\\\\Desktop\\\\Workspace\\\\portfolio-build\" -Force)",
+      "Bash(python \"C:\\\\Users\\\\cukan\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio personal developer minimal scannable timeline\" --design-system -p \"Portfolio Journey\" -f markdown)",
+      "Bash(python \"C:\\\\Users\\\\cukan\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\src\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio personal developer minimal scannable timeline\" --design-system -p \"Portfolio Journey\" -f markdown)",
+      "Bash(python \"C:\\\\Users\\\\cukan\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\src\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio\" --domain product -n 5)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const lu = require\\('react-icons/lu'\\); console.log\\(Object.keys\\(lu\\).filter\\(k => k.toLowerCase\\(\\).includes\\('bar'\\) || k.toLowerCase\\(\\).includes\\('chart'\\)\\).join\\('\\\\n'\\)\\)\")"
     ]
   }
 }

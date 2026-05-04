@@ -26,3 +26,4 @@ export const processSteps: ProcessStep[] = [
     body: "I use Codex and Claude Code to accelerate implementation, debugging, review, and refactoring, then validate the output through my own testing and code judgment.",
   },
 ];
+

@@ -1,190 +1,134 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 // components
-import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionLabel from "@/components/ui/SectionLabel";
+import SectionWrapper from "@/components/ui/SectionWrapper";
 
 // styles
 import styles from "./index.module.css";
 
-// data
-import { stack } from "@/data/stack";
+const focusAreas = [
+  {
+    title: "From Figma to shipped UI",
+    body: "I take designs and turn them into responsive React + TypeScript interfaces that handle real-world data and edge cases.",
+  },
+  {
+    title: "Product flows that actually get used",
+    body: "A lot of what I build lives in admin systems and e-commerce flows — tables, forms, filters, and all the weird states in between.",
+  },
+  {
+    title: "Maintainable by default",
+    body: "I focus on keeping things structured, readable, and easy for the next developer to work on 🛠️",
+  },
+];
 
-const TABS = ["All", "Core", "Frontend", "Product"] as const;
-type Tab = (typeof TABS)[number];
+const signals = [
+  "React / TypeScript",
+  "Admin platforms",
+  "E-commerce flows",
+  "Responsive interfaces",
+  "Analytics touchpoints",
+  "AI-assisted delivery",
+];
 
-const stats = [
+const metrics = [
   { value: "2.5+", label: "years frontend" },
-  { value: "5+", label: "products shipped" },
+  { value: "5", label: "products shipped" },
   { value: "SG", label: "market experience" },
 ];
 
-const strengths = [
-  {
-    title: "React product UI",
-    body: "Build maintainable screens for admin platforms, e-commerce flows, forms, tables, filters, dashboards, and responsive product pages.",
-  },
-  {
-    title: "Next.js implementation",
-    body: "Comfortable with App Router, Pages Router, SSR, SSG, ISR, CSR, middleware, dynamic routes, and SEO-facing metadata decisions.",
-  },
-  {
-    title: "Analytics and business signals",
-    body: "Implement GTM, dataLayer events, GA4 tracking, Firebase Analytics, and product/FAQ schema markup so frontend work supports measurable decisions.",
-  },
-  {
-    title: "AI-assisted delivery",
-    body: "Use tools like Codex and Claude Code to speed up implementation, debugging, refactoring, and review while keeping ownership of code quality.",
-  },
-];
-
 export default function About() {
-  const [activeTab, setActiveTab] = useState<Tab>("All");
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  const filtered =
-    activeTab === "All" ? stack : stack.filter((s) => s.category === activeTab);
-
   return (
-    <SectionWrapper id="skills">
-      <div className={styles.grid}>
-        {/* ── Left: Bio ─────────────────────────────────────────── */}
-        <div className={styles.bio}>
-          <SectionLabel number="02" title="Skills" />
-          <h2 className={styles.heading}>
-            Frontend implementation with product context.
-          </h2>
-
-          <div className={styles.body}>
+    <SectionWrapper id="about">
+      <div className={styles.shell}>
+        <div className={styles.intro}>
+          <SectionLabel number="01" title="About" />
+          <motion.h2
+            className={styles.heading}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          >
+            Frontend developer for clean product interfaces.
+          </motion.h2>
+          <div className={styles.copy}>
             <p>
-              I am a frontend developer focused on React and Next.js,
-              currently building production interfaces for Singapore-based
-              product teams.
+              I work with React, Next.js, and TypeScript, turning Figma designs
+              into responsive UI that actually holds up in real-world use.
             </p>
             <p>
-              My work covers admin platforms, supplier systems, e-commerce
-              websites, responsive web, and mobile-related UI. I translate
-              Figma designs into reliable interfaces, integrate APIs, and keep
-              user flows clear even when the business logic is complex.
+              A lot of what I build sits in admin tools, e-commerce journeys,
+              and analytics-heavy screens — the kind where things need to be
+              clear and usable, not just nice-looking.
             </p>
-            <p>
-              I also care about the commercial side of frontend work:
-              performance, analytics, structured data, maintainability, and the
-              small UI details that make products easier to operate and scale.
-            </p>
-          </div>
-
-          {/* Stats row */}
-          <div className={styles.stats}>
-            {stats.map(({ value, label }, i) => (
-              <motion.div
-                key={label}
-                className={styles.stat}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  delay: 0.1 * i,
-                  duration: 0.5,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <span className={styles.statValue}>{value}</span>
-                <span className={styles.statLabel}>{label}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className={styles.strengths}>
-            {strengths.map((item) => (
-              <article key={item.title} className={styles.strengthCard}>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </article>
-            ))}
           </div>
         </div>
 
-        {/* ── Right: Stack ──────────────────────────────────────── */}
-        <div className={styles.stackCol}>
-          {/* Tab pills */}
-          <div className={styles.tabs} role="tablist">
-            {TABS.map((tab) => (
-              <button
-                key={tab}
-                role="tab"
-                aria-selected={activeTab === tab}
-                className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ""}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-                {activeTab === tab && (
-                  <motion.span
-                    className={styles.tabUnderline}
-                    layoutId="tab-underline"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-              </button>
+        <motion.aside
+          className={styles.profileCard}
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className={styles.cardEyebrow}>What I care about</span>
+          <p>
+            Clean UX, components that don’t get messy, predictable state, and
+            the small frontend details that make things easier to use.
+          </p>
+          <div className={styles.signalGrid}>
+            {signals.map((signal) => (
+              <span key={signal}>{signal}</span>
             ))}
           </div>
+        </motion.aside>
+      </div>
 
-          {/* Icon grid */}
-          <motion.div className={styles.iconGrid} layout>
-            <AnimatePresence mode="popLayout">
-              {filtered.map((item) => (
-                <motion.div
-                  key={item.name}
-                  layout
-                  className={styles.card}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ y: -4, scale: 1.05 }}
-                  onHoverStart={() => setHoveredItem(item.name)}
-                  onHoverEnd={() => setHoveredItem(null)}
-                  style={
-                    hoveredItem === item.name
-                      ? ({
-                          "--glow": item.color,
-                          borderColor: `${item.color}55`,
-                          boxShadow: `0 0 0 1px ${item.color}33, 0 8px 24px ${item.color}22`,
-                        } as React.CSSProperties)
-                      : undefined
-                  }
-                >
-                  {/* Icon */}
-                  <div className={styles.iconWrap}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`https://cdn.simpleicons.org/${item.icon}`}
-                      alt={item.name}
-                      width={28}
-                      height={28}
-                      className={styles.icon}
-                      style={
-                        hoveredItem === item.name
-                          ? { filter: "none" }
-                          : undefined
-                      }
-                    />
-                  </div>
+      <div className={styles.detailGrid}>
+        <div className={styles.metrics}>
+          {metrics.map((item, index) => (
+            <motion.div
+              key={item.label}
+              className={styles.metric}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{
+                duration: 0.45,
+                delay: index * 0.08,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
+            </motion.div>
+          ))}
+        </div>
 
-                  {/* Name */}
-                  <span className={styles.cardName}>{item.name}</span>
-
-                  {/* Category badge — only visible in "All" tab */}
-                  {activeTab === "All" && (
-                    <span className={styles.badge}>{item.category}</span>
-                  )}
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+        <div className={styles.focusGrid}>
+          {focusAreas.map((area, index) => (
+            <motion.article
+              key={area.title}
+              className={styles.focusCard}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.08,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              <span className={styles.focusNumber}>
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3>{area.title}</h3>
+              <p>{area.body}</p>
+            </motion.article>
+          ))}
         </div>
       </div>
     </SectionWrapper>

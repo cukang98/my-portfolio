@@ -1,10 +1,10 @@
 export const meta = {
   name: "Hi, I'm Cu Kang",
-  role: "Frontend Developer · React / Next.js",
+  role: "Frontend Developer - React / TypeScript",
   tagline: [
     "I build responsive React interfaces from Figma to production.",
-    "I work across admin platforms, e-commerce, analytics, and API-heavy UI.",
-    "I turn frontend implementation into measurable product and business value.",
+    "I work across admin platforms, e-commerce flows, and API-heavy UI.",
+    "I care about clean components, practical UX, and measurable product value.",
   ],
   available: true,
   email: "cukang98@gmail.com",
@@ -13,3 +13,4 @@ export const meta = {
     linkedin: "https://www.linkedin.com/in/cu-kang-tin-b77268178/",
   },
 };
+

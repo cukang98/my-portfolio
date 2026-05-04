@@ -1,316 +1,390 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-
-// styles
-import styles from './index.module.css'
-
-// data
-import { projects, Project } from '@/data/projects'
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
 
 // components
-import Tag from '@/components/ui/Tag'
+import Tag from "@/components/ui/Tag";
 
-/* ─── Spotlight image gallery ────────────────────────────────────────────────*/
+// data
+import {
+  independentProjects,
+  professionalProjects,
+  Project,
+  ProjectCategory,
+} from "@/data/projects";
 
-/* ─── Mobile phone carousel (2 visible at a time) ──────────────────────────*/
+// styles
+import styles from "./index.module.css";
 
-function MobileGallery ({ images, title }: { images: string[]; title: string }) {
-  const totalPages = Math.ceil(images.length / 2)
-  const [page, setPage] = useState(0)
+type WorkView = ProjectCategory;
 
-  const goNext = () => setPage(p => (p + 1) % totalPages)
-  const goPrev = () => setPage(p => (p - 1 + totalPages) % totalPages)
+const viewLabels: Record<WorkView, string> = {
+  professional: "Professional Projects",
+  independent: "Independent Projects",
+};
 
-  // auto-play
-  useEffect(() => {
-    if (totalPages <= 1) return
-    const t = setInterval(goNext, 3500)
-    return () => clearInterval(t)
-  }, [totalPages])
-
-  // reset page when images change
-  useEffect(() => { setPage(0) }, [images])
-
-  const visible = images.slice(page * 2, page * 2 + 2)
-
-  return (
-    <div className={styles.mobileGalleryWrap}>
-      <div className={styles.mobileGalleryViewport}>
-        <AnimatePresence mode='wait'>
-          <motion.div
-            key={page}
-            className={styles.mobileGalleryTrack}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {visible.map((src, i) => (
-              <div key={src} className={styles.phoneFrame}>
-                <div className={styles.phoneNotch} />
-                <img src={src} alt={`${title} screen ${page * 2 + i + 1}`} className={styles.phoneScreen} />
-              </div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation */}
-      {totalPages > 1 && (
-        <div className={styles.mobileNav}>
-          <button className={styles.mobileNavBtn} onClick={goPrev} aria-label='Previous'>
-            ←
-          </button>
-          <div className={styles.mobileNavDots}>
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                className={`${styles.mobileNavDot} ${i === page ? styles.mobileNavDotActive : ''}`}
-                onClick={() => setPage(i)}
-                aria-label={`Page ${i + 1}`}
-              />
-            ))}
-          </div>
-          <button className={styles.mobileNavBtn} onClick={goNext} aria-label='Next'>
-            →
-          </button>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* ─── Web image gallery (auto-rotating) ─────────────────────────────────────*/
-
-function SpotlightImage ({
+function ProjectMedia({
   images,
   title,
   isMobile,
+  compact = false,
 }: {
-  images?: string[]
-  title: string
-  isMobile?: boolean
+  images?: string[];
+  title: string;
+  isMobile?: boolean;
+  compact?: boolean;
 }) {
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    setActive(0)
-  }, [images])
+    setActive(0);
+  }, [images]);
 
   useEffect(() => {
-    if (!images || images.length <= 1 || isMobile) return
-    const t = setInterval(() => setActive(i => (i + 1) % images.length), 3200)
-    return () => clearInterval(t)
-  }, [images, isMobile])
+    if (!images || images.length <= 1) return;
+    const timer = window.setInterval(
+      () => setActive((index) => (index + 1) % images.length),
+      compact ? 4200 : 3400,
+    );
+    return () => window.clearInterval(timer);
+  }, [compact, images]);
 
-  if (!images || images.length === 0) {
+  if (!images?.length) {
     return (
-      <div className={styles.spotlightNoImage}>
-        <span className={styles.spotlightNoImageInitial}>
-          {title.charAt(0)}
-        </span>
+      <div className={`${styles.mediaFallback} ${compact ? styles.mediaCompact : ""}`}>
+        <span>{title.slice(0, 1)}</span>
       </div>
-    )
+    );
   }
-
-  if (isMobile) {
-    return <MobileGallery images={images} title={title} />
-  }
-
-  const goNext = () => setActive(i => (i + 1) % images.length)
-  const goPrev = () => setActive(i => (i - 1 + images.length) % images.length)
 
   return (
-    <div className={styles.spotlightImageWrap}>
-      {images.map((src, i) => (
+    <div
+      className={`${styles.media} ${isMobile ? styles.mediaMobile : ""} ${
+        compact ? styles.mediaCompact : ""
+      }`}
+    >
+      {images.map((src, index) => (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           key={src}
           src={src}
-          alt={title}
-          className={`${styles.spotlightImg} ${
-            i === active ? styles.spotlightImgActive : ''
+          alt={`${title} preview ${index + 1}`}
+          className={`${styles.mediaImage} ${
+            index === active ? styles.mediaImageActive : ""
           }`}
         />
       ))}
-      <div className={styles.spotlightImgGradient} />
+
       {images.length > 1 && (
-        <>
-          <button className={`${styles.spotlightArrow} ${styles.spotlightArrowLeft}`} onClick={goPrev} aria-label='Previous image'>
-            ←
-          </button>
-          <button className={`${styles.spotlightArrow} ${styles.spotlightArrowRight}`} onClick={goNext} aria-label='Next image'>
-            →
-          </button>
-          <div className={styles.spotlightDots}>
-            {images.map((_, i) => (
-              <button
-                key={i}
-                aria-label={`Image ${i + 1}`}
-                className={`${styles.spotlightDot} ${
-                  i === active ? styles.spotlightDotActive : ''
-                }`}
-                onClick={() => setActive(i)}
-              />
-            ))}
-          </div>
-        </>
+        <div className={styles.mediaDots}>
+          {images.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={`Show ${title} preview ${index + 1}`}
+              className={`${styles.mediaDot} ${
+                index === active ? styles.mediaDotActive : ""
+              }`}
+              onClick={() => setActive(index)}
+            />
+          ))}
+        </div>
       )}
     </div>
-  )
+  );
 }
 
-/* ─── Spotlight panel ────────────────────────────────────────────────────────*/
+function ViewTabs({
+  activeView,
+  onChange,
+}: {
+  activeView: WorkView;
+  onChange: (view: WorkView) => void;
+}) {
+  const counts: Record<WorkView, number> = {
+    professional: professionalProjects.length,
+    independent: independentProjects.length,
+  };
 
-function SpotlightPanel ({ project }: { project: Project }) {
   return (
-    <motion.div
+    <div className={styles.viewBar} aria-label="Project category selector">
+      {(Object.keys(viewLabels) as WorkView[]).map((view) => (
+        <button
+          key={view}
+          type="button"
+          className={`${styles.viewButton} ${
+            activeView === view ? styles.viewButtonActive : ""
+          }`}
+          aria-pressed={activeView === view}
+          onClick={() => onChange(view)}
+        >
+          <span>{viewLabels[view]}</span>
+          <strong>{counts[view]}</strong>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ProfessionalTimeline({
+  selectedId,
+  onSelect,
+}: {
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <aside className={styles.timeline} aria-label="Professional project list">
+      <div className={styles.timelineIntro}>
+        <span>Professional track</span>
+        <p>Stuff I worked on at my job: admin tools, product flows, and commerce UI.</p>
+      </div>
+
+      <div className={styles.timelineList}>
+        {professionalProjects.map((project, index) => (
+          <button
+            key={project.id}
+            type="button"
+            className={`${styles.timelineItem} ${
+              project.id === selectedId ? styles.timelineItemActive : ""
+            }`}
+            onClick={() => onSelect(project.id)}
+          >
+            <span className={styles.timelineIndex}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className={styles.timelineText}>
+              <strong>{project.title}</strong>
+              <small>{project.kind}</small>
+            </span>
+            <span className={styles.timelineYear}>{project.year}</span>
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
+function ProfessionalSpotlight({ project }: { project: Project }) {
+  return (
+    <motion.article
       key={project.id}
-      className={styles.spotlightPanel}
-      initial={{ opacity: 0, y: 20 }}
+      className={styles.caseStudy}
+      initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
     >
-      <SpotlightImage images={project.images} title={project.title} isMobile={project.type === 'mobile'} />
+      <ProjectMedia
+        images={project.images}
+        title={project.title}
+        isMobile={project.type === "mobile"}
+      />
 
-      <div className={styles.spotlightBody}>
-        <div className={styles.spotlightMeta}>
-          <span className={styles.spotlightYear}>{project.year}</span>
-          <div className={styles.spotlightLinkRow}>
+      <div className={styles.caseBody}>
+        <div className={styles.caseMeta}>
+          <span>{project.kind}</span>
+          <span>{project.year}</span>
+        </div>
+
+        <div className={styles.caseTitleRow}>
+          <div>
+            <h3>{project.title}</h3>
+            <p>{project.role}</p>
+          </div>
+
+          <div className={styles.links}>
             {project.url && (
-              <a
-                href={project.url}
-                target='_blank'
-                rel='noopener noreferrer'
-                className={styles.spotlightLink}
-                onClick={e => e.stopPropagation()}
-              >
-                Live ↗
+              <a href={project.url} target="_blank" rel="noopener noreferrer">
+                Live
               </a>
             )}
             {project.repo && (
-              <a
-                href={project.repo}
-                target='_blank'
-                rel='noopener noreferrer'
-                className={styles.spotlightLink}
-                onClick={e => e.stopPropagation()}
-              >
-                Repo ↗
+              <a href={project.repo} target="_blank" rel="noopener noreferrer">
+                Repo
               </a>
             )}
           </div>
         </div>
 
-        <h3 className={styles.spotlightTitle}>{project.title}</h3>
-        <p className={styles.spotlightRole}>{project.role}</p>
-        <p className={styles.spotlightDesc}>{project.description}</p>
+        <p className={styles.caseDescription}>{project.description}</p>
 
-        <div className={styles.impactBox}>
-          <span className={styles.impactLabel}>Business value</span>
-          <p>{project.impact}</p>
+        <div className={styles.caseContentGrid}>
+          <div className={styles.impactCard}>
+            <span>Product value</span>
+            <p>{project.impact}</p>
+          </div>
+
+          <ul className={styles.highlights}>
+            {project.highlights.map((highlight) => (
+              <li key={highlight}>{highlight}</li>
+            ))}
+          </ul>
         </div>
 
-        <ul className={styles.highlightList}>
-          {project.highlights.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-
-        <div className={styles.spotlightTags}>
-          {project.tags.map(tag => (
+        <div className={styles.tags}>
+          {project.tags.map((tag) => (
             <Tag key={tag}>{tag}</Tag>
           ))}
         </div>
       </div>
-    </motion.div>
-  )
+    </motion.article>
+  );
 }
 
-/* ─── Project list item ──────────────────────────────────────────────────────*/
+function ProfessionalPanel() {
+  const defaultId = professionalProjects[0]?.id ?? "";
+  const [selectedId, setSelectedId] = useState(defaultId);
+  const selected =
+    professionalProjects.find((project) => project.id === selectedId) ??
+    professionalProjects[0];
 
-function ProjectListItem ({
-  project,
-  index,
-  isActive,
-  onClick,
-}: {
-  project: Project
-  index: number
-  isActive: boolean
-  onClick: () => void
-}) {
+  if (!selected) return null;
+
   return (
-    <motion.button
-      className={`${styles.listItem} ${isActive ? styles.listItemActive : ''}`}
-      onClick={onClick}
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{
-        duration: 0.4,
-        delay: index * 0.07,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+    <motion.div
+      key="professional"
+      className={styles.professionalPanel}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Active bar */}
-      <motion.div
-        className={styles.listActiveBar}
-        initial={false}
-        animate={{ scaleY: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
-        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      />
-
-      <span className={styles.listNum}>
-        {String(index + 1).padStart(2, '0')}
-      </span>
-
-      <div className={styles.listContent}>
-        <span className={styles.listTitle}>{project.title}</span>
-        <span className={styles.listSub}>
-          {project.role}
-        </span>
-      </div>
-
-      <span className={styles.listYear}>{project.year}</span>
-    </motion.button>
-  )
-}
-
-/* ─── Main export ────────────────────────────────────────────────────────────*/
-
-export default function BentoGrid () {
-  const defaultId =
-    (projects.find(p => p.size === 'featured') ?? projects[0]).id
-  const [spotlightId, setSpotlightId] = useState(defaultId)
-  const spotlight = projects.find(p => p.id === spotlightId) ?? projects[0]
-
-  return (
-    <div className={styles.showcase}>
-      {/* Left — spotlight */}
-      <div className={styles.spotlightWrap}>
-        <AnimatePresence mode='wait'>
-          <SpotlightPanel key={spotlightId} project={spotlight} />
+      <ProfessionalTimeline selectedId={selected.id} onSelect={setSelectedId} />
+      <div className={styles.caseWrap}>
+        <AnimatePresence mode="wait">
+          <ProfessionalSpotlight key={selected.id} project={selected} />
         </AnimatePresence>
       </div>
+    </motion.div>
+  );
+}
 
-      {/* Right — project selector */}
-      <div className={styles.selectorWrap}>
-        <span className={styles.selectorLabel}>All projects</span>
-        <div className={styles.selectorList}>
-          {projects.map((project, i) => (
-            <ProjectListItem
-              key={project.id}
-              project={project}
-              index={i}
-              isActive={project.id === spotlightId}
-              onClick={() => setSpotlightId(project.id)}
-            />
+function IndependentProjectCard({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  const href = project.url ?? project.repo;
+
+  const content = (
+    <>
+      <ProjectMedia
+        images={project.images}
+        title={project.title}
+        isMobile={project.type === "mobile"}
+        compact
+      />
+      <div className={styles.labCardBody}>
+        <div className={styles.labMeta}>
+          <span>{project.kind}</span>
+          <span>{project.year}</span>
+        </div>
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+        <div className={styles.tags}>
+          {project.tags.slice(0, 5).map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
           ))}
         </div>
       </div>
+    </>
+  );
+
+  const className = styles.labCard;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.34, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+          {content}
+        </a>
+      ) : (
+        <article className={className}>{content}</article>
+      )}
+    </motion.div>
+  );
+}
+
+function IndependentPanel() {
+  const hasProjects = independentProjects.length > 0;
+
+  return (
+    <motion.div
+      key="independent"
+      className={styles.independentPanel}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className={styles.labIntro}>
+        <span>Independent lab</span>
+        <h3>Side projects, experiments, and things I try on my own.</h3>
+        <p>
+          Add a project with `category: "independent"` in `src/data/projects.ts`.
+          It will show up here automatically.
+        </p>
+      </div>
+
+      {hasProjects ? (
+        <div className={styles.labGrid}>
+          {independentProjects.map((project, index) => (
+            <IndependentProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.emptyState}>
+          <span>Ready for future projects</span>
+          <h3>No side projects here yet.</h3>
+          <p>
+            The space is ready. I just do not want to fill it with random demos
+            until they feel worth showing.
+          </p>
+        </div>
+      )}
+    </motion.div>
+  );
+}
+
+export default function BentoGrid() {
+  const [activeView, setActiveView] = useState<WorkView>("professional");
+  const activeCount = useMemo(
+    () =>
+      activeView === "professional"
+        ? professionalProjects.length
+        : independentProjects.length,
+    [activeView],
+  );
+
+  return (
+    <div className={styles.showcase}>
+      <div className={styles.showcaseHeader}>
+        <ViewTabs activeView={activeView} onChange={setActiveView} />
+        <div className={styles.viewSummary}>
+          <span>{activeCount}</span>
+          <p>{viewLabels[activeView]}</p>
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        {activeView === "professional" ? (
+          <ProfessionalPanel />
+        ) : (
+          <IndependentPanel />
+        )}
+      </AnimatePresence>
     </div>
-  )
+  );
 }
