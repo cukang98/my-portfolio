@@ -20,20 +20,20 @@ import styles from "./index.module.css";
 type WorkView = ProjectCategory;
 
 const viewLabels: Record<WorkView, string> = {
-  professional: "Professional Projects",
-  independent: "Independent Projects",
+  professional: "Professional",
+  independent: "Independent",
 };
+
+/* ─── Shared: image gallery ──────────────────────────────────────────────── */
 
 function ProjectMedia({
   images,
   title,
   isMobile,
-  compact = false,
 }: {
   images?: string[];
   title: string;
   isMobile?: boolean;
-  compact?: boolean;
 }) {
   const [active, setActive] = useState(0);
 
@@ -44,49 +44,40 @@ function ProjectMedia({
   useEffect(() => {
     if (!images || images.length <= 1) return;
     const timer = window.setInterval(
-      () => setActive((index) => (index + 1) % images.length),
-      compact ? 4200 : 3400,
+      () => setActive((i) => (i + 1) % images.length),
+      3400,
     );
     return () => window.clearInterval(timer);
-  }, [compact, images]);
+  }, [images]);
 
   if (!images?.length) {
     return (
-      <div className={`${styles.mediaFallback} ${compact ? styles.mediaCompact : ""}`}>
+      <div className={styles.mediaFallback}>
         <span>{title.slice(0, 1)}</span>
       </div>
     );
   }
 
   return (
-    <div
-      className={`${styles.media} ${isMobile ? styles.mediaMobile : ""} ${
-        compact ? styles.mediaCompact : ""
-      }`}
-    >
-      {images.map((src, index) => (
+    <div className={`${styles.media} ${isMobile ? styles.mediaMobile : ""}`}>
+      {images.map((src, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={src}
           src={src}
-          alt={`${title} preview ${index + 1}`}
-          className={`${styles.mediaImage} ${
-            index === active ? styles.mediaImageActive : ""
-          }`}
+          alt={`${title} preview ${i + 1}`}
+          className={`${styles.mediaImage} ${i === active ? styles.mediaImageActive : ""}`}
         />
       ))}
-
       {images.length > 1 && (
         <div className={styles.mediaDots}>
-          {images.map((_, index) => (
+          {images.map((_, i) => (
             <button
-              key={index}
+              key={i}
               type="button"
-              aria-label={`Show ${title} preview ${index + 1}`}
-              className={`${styles.mediaDot} ${
-                index === active ? styles.mediaDotActive : ""
-              }`}
-              onClick={() => setActive(index)}
+              aria-label={`Show ${title} preview ${i + 1}`}
+              className={`${styles.mediaDot} ${i === active ? styles.mediaDotActive : ""}`}
+              onClick={() => setActive(i)}
             />
           ))}
         </div>
@@ -94,6 +85,28 @@ function ProjectMedia({
     </div>
   );
 }
+
+/* ─── Shared: link buttons ───────────────────────────────────────────────── */
+
+function ProjectLinks({ project }: { project: Project }) {
+  if (!project.url && !project.repo) return null;
+  return (
+    <div className={styles.links}>
+      {project.url && (
+        <a href={project.url} target="_blank" rel="noopener noreferrer">
+          Live ↗
+        </a>
+      )}
+      {project.repo && (
+        <a href={project.repo} target="_blank" rel="noopener noreferrer">
+          Repo ↗
+        </a>
+      )}
+    </div>
+  );
+}
+
+/* ─── View tabs ──────────────────────────────────────────────────────────── */
 
 function ViewTabs({
   activeView,
@@ -113,9 +126,7 @@ function ViewTabs({
         <button
           key={view}
           type="button"
-          className={`${styles.viewButton} ${
-            activeView === view ? styles.viewButtonActive : ""
-          }`}
+          className={`${styles.viewButton} ${activeView === view ? styles.viewButtonActive : ""}`}
           aria-pressed={activeView === view}
           onClick={() => onChange(view)}
         >
@@ -127,6 +138,8 @@ function ViewTabs({
   );
 }
 
+/* ─── Professional: timeline sidebar ────────────────────────────────────── */
+
 function ProfessionalTimeline({
   selectedId,
   onSelect,
@@ -136,19 +149,12 @@ function ProfessionalTimeline({
 }) {
   return (
     <aside className={styles.timeline} aria-label="Professional project list">
-      <div className={styles.timelineIntro}>
-        <span>Professional track</span>
-        <p>Stuff I worked on at my job: admin tools, product flows, and commerce UI.</p>
-      </div>
-
       <div className={styles.timelineList}>
         {professionalProjects.map((project, index) => (
           <button
             key={project.id}
             type="button"
-            className={`${styles.timelineItem} ${
-              project.id === selectedId ? styles.timelineItemActive : ""
-            }`}
+            className={`${styles.timelineItem} ${project.id === selectedId ? styles.timelineItemActive : ""}`}
             onClick={() => onSelect(project.id)}
           >
             <span className={styles.timelineIndex}>
@@ -166,7 +172,9 @@ function ProfessionalTimeline({
   );
 }
 
-function ProfessionalSpotlight({ project }: { project: Project }) {
+/* ─── Shared spotlight (used by both panels) ─────────────────────────────── */
+
+function ProjectSpotlight({ project }: { project: Project }) {
   return (
     <motion.article
       key={project.id}
@@ -181,48 +189,30 @@ function ProfessionalSpotlight({ project }: { project: Project }) {
         title={project.title}
         isMobile={project.type === "mobile"}
       />
-
       <div className={styles.caseBody}>
         <div className={styles.caseMeta}>
           <span>{project.kind}</span>
           <span>{project.year}</span>
         </div>
-
         <div className={styles.caseTitleRow}>
           <div>
             <h3>{project.title}</h3>
             <p>{project.role}</p>
           </div>
-
-          <div className={styles.links}>
-            {project.url && (
-              <a href={project.url} target="_blank" rel="noopener noreferrer">
-                Live
-              </a>
-            )}
-            {project.repo && (
-              <a href={project.repo} target="_blank" rel="noopener noreferrer">
-                Repo
-              </a>
-            )}
-          </div>
+          <ProjectLinks project={project} />
         </div>
-
         <p className={styles.caseDescription}>{project.description}</p>
-
         <div className={styles.caseContentGrid}>
           <div className={styles.impactCard}>
             <span>Product value</span>
             <p>{project.impact}</p>
           </div>
-
           <ul className={styles.highlights}>
-            {project.highlights.map((highlight) => (
-              <li key={highlight}>{highlight}</li>
+            {project.highlights.map((h) => (
+              <li key={h}>{h}</li>
             ))}
           </ul>
         </div>
-
         <div className={styles.tags}>
           {project.tags.map((tag) => (
             <Tag key={tag}>{tag}</Tag>
@@ -233,11 +223,13 @@ function ProfessionalSpotlight({ project }: { project: Project }) {
   );
 }
 
+/* ─── Professional panel ─────────────────────────────────────────────────── */
+
 function ProfessionalPanel() {
   const defaultId = professionalProjects[0]?.id ?? "";
   const [selectedId, setSelectedId] = useState(defaultId);
   const selected =
-    professionalProjects.find((project) => project.id === selectedId) ??
+    professionalProjects.find((p) => p.id === selectedId) ??
     professionalProjects[0];
 
   if (!selected) return null;
@@ -245,76 +237,89 @@ function ProfessionalPanel() {
   return (
     <motion.div
       key="professional"
-      className={styles.professionalPanel}
+      className={styles.proPanelWrap}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
     >
-      <ProfessionalTimeline selectedId={selected.id} onSelect={setSelectedId} />
-      <div className={styles.caseWrap}>
-        <AnimatePresence mode="wait">
-          <ProfessionalSpotlight key={selected.id} project={selected} />
-        </AnimatePresence>
+      {/* Gradient banner */}
+      <div className={styles.proBanner}>
+        <div className={styles.proBannerGradient} aria-hidden="true" />
+        <div className={styles.proBannerContent}>
+          <div className={styles.proBannerLeft}>
+            <span className={styles.proBannerLabel}>Professional work</span>
+            <h3 className={styles.proBannerHeading}>
+              Shipped at work, used in production.
+            </h3>
+          </div>
+          <p className={styles.proBannerSub}>
+            Frontend across admin tools, e-commerce flows, and responsive UI 💻
+          </p>
+        </div>
+      </div>
+
+      <div className={styles.professionalPanel}>
+        <ProfessionalTimeline
+          selectedId={selected.id}
+          onSelect={setSelectedId}
+        />
+        <div className={styles.caseWrap}>
+          <AnimatePresence mode="wait">
+            <ProjectSpotlight key={selected.id} project={selected} />
+          </AnimatePresence>
+        </div>
       </div>
     </motion.div>
   );
 }
 
-function IndependentProjectCard({
-  project,
-  index,
+/* ─── Independent: timeline sidebar ─────────────────────────────────────── */
+
+function IndependentTimeline({
+  selectedId,
+  onSelect,
 }: {
-  project: Project;
-  index: number;
+  selectedId: string;
+  onSelect: (id: string) => void;
 }) {
-  const href = project.url ?? project.repo;
-
-  const content = (
-    <>
-      <ProjectMedia
-        images={project.images}
-        title={project.title}
-        isMobile={project.type === "mobile"}
-        compact
-      />
-      <div className={styles.labCardBody}>
-        <div className={styles.labMeta}>
-          <span>{project.kind}</span>
-          <span>{project.year}</span>
-        </div>
-        <h3>{project.title}</h3>
-        <p>{project.description}</p>
-        <div className={styles.tags}>
-          {project.tags.slice(0, 5).map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-
-  const className = styles.labCard;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.34, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-          {content}
-        </a>
-      ) : (
-        <article className={className}>{content}</article>
-      )}
-    </motion.div>
+    <aside className={styles.timeline} aria-label="Independent project list">
+      <div className={styles.timelineList}>
+        {independentProjects.map((project, index) => (
+          <button
+            key={project.id}
+            type="button"
+            className={`${styles.timelineItem} ${project.id === selectedId ? styles.timelineItemActive : ""}`}
+            onClick={() => onSelect(project.id)}
+          >
+            <span className={styles.timelineIndex}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className={styles.timelineText}>
+              <strong>{project.title}</strong>
+              <small>{project.kind}</small>
+            </span>
+            <span className={styles.timelineYear}>{project.year}</span>
+          </button>
+        ))}
+      </div>
+    </aside>
   );
 }
+
+/* ─── Independent panel ──────────────────────────────────────────────────── */
+
+const TICKER_EMOJIS =
+  "🚀  💻  🎨  ⚡  🔥  🛠️  🧠  🎯  🌐  🔗  💡  📦  🧩  ✨  🖥️  🎮  📡  🧪  🔧  🎲  ";
 
 function IndependentPanel() {
   const hasProjects = independentProjects.length > 0;
+  const defaultId = independentProjects[0]?.id ?? "";
+  const [selectedId, setSelectedId] = useState(defaultId);
+  const selected =
+    independentProjects.find((p) => p.id === selectedId) ??
+    independentProjects[0];
 
   return (
     <motion.div
@@ -325,38 +330,64 @@ function IndependentPanel() {
       exit={{ opacity: 0, y: -12 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className={styles.labIntro}>
-        <span>Independent lab</span>
-        <h3>Side projects, experiments, and things I try on my own.</h3>
-        <p>
-          Add a project with `category: "independent"` in `src/data/projects.ts`.
-          It will show up here automatically.
-        </p>
+      {/* Banner with diagonal emoji grid */}
+      <div className={styles.labBanner}>
+        <div className={styles.labTickerBg} aria-hidden="true">
+          {[...Array(6)].map((_, row) => {
+            const rev = row % 2 === 1;
+            return (
+              <div key={row} className={styles.labTickerRow}>
+                <span
+                  className={`${styles.labTickerTrack} ${rev ? styles.labTickerRev : ""}`}
+                >
+                  {TICKER_EMOJIS}
+                  {TICKER_EMOJIS}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className={styles.labBannerContent}>
+          <div className={styles.labBannerLeft}>
+            <span className={styles.labBannerLabel}>Independent lab</span>
+            <h3 className={styles.labBannerHeading}>
+              Projects I own end-to-end.
+            </h3>
+          </div>
+          <p className={styles.labBannerSub}>
+            Building stuff to learn, ship, and see what actually works ⚡
+          </p>
+        </div>
       </div>
 
-      {hasProjects ? (
-        <div className={styles.labGrid}>
-          {independentProjects.map((project, index) => (
-            <IndependentProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-            />
-          ))}
+      {hasProjects && selected ? (
+        <div className={styles.professionalPanel}>
+          <IndependentTimeline
+            selectedId={selected.id}
+            onSelect={setSelectedId}
+          />
+          <div className={styles.caseWrap}>
+            <AnimatePresence mode="wait">
+              <ProjectSpotlight key={selected.id} project={selected} />
+            </AnimatePresence>
+          </div>
         </div>
       ) : (
         <div className={styles.emptyState}>
           <span>Ready for future projects</span>
-          <h3>No side projects here yet.</h3>
+          <h3>Nothing here yet.</h3>
           <p>
-            The space is ready. I just do not want to fill it with random demos
-            until they feel worth showing.
+            The space is ready. I only want to show work that feels worth
+            sharing.
           </p>
         </div>
       )}
     </motion.div>
   );
 }
+
+/* ─── Root export ────────────────────────────────────────────────────────── */
 
 export default function BentoGrid() {
   const [activeView, setActiveView] = useState<WorkView>("professional");

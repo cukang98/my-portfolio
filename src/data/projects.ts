@@ -117,9 +117,9 @@ export const projects: Project[] = [
     impact:
       "Extended product coverage beyond web with mobile UI screens and smoother onboarding interactions.",
     highlights: [
-      "Contributed to mobile UI development and onboarding flows.",
-      "Adjusted layouts for different mobile screen sizes and interaction states.",
-      "Collaborated across web and mobile product surfaces for a consistent user experience.",
+      "Delivered onboarding and user-facing features in the mobile app.",
+      "Implemented mobile UI and interaction states using Flutter.",
+      "Aligned mobile experience with existing web product flows.",
     ],
     tags: ["Flutter", "Dart", "Mobile UI", "Responsive UI"],
     url: "https://apps.apple.com/sg/app/wizlah/id1616865876",
@@ -161,13 +161,47 @@ export const projects: Project[] = [
     size: "small",
     year: 2023,
   },
+  {
+    id: "project-six",
+    title: "Draw and Guess",
+    category: "independent",
+    kind: "Personal Build",
+    role: "Solo developer",
+    description:
+      "A real-time multiplayer drawing and guessing game where players take turns drawing a word while others race to type the correct answer in chat.",
+    impact:
+      "Proved out a fullstack real-time architecture — from WebSocket room state to live canvas sync — as a complete, self-contained personal build.",
+    highlights: [
+      "Built live canvas syncing with Socket.io, broadcasting drawing strokes instantly to all room participants.",
+      "Implemented bilingual word sets (English and Chinese) with time-based and position-based scoring across 3-round games.",
+      "Designed full room lifecycle — lobby, ready-up, active game, reconnection grace period — with up to 8 concurrent players.",
+    ],
+    tags: [
+      "Next.js",
+      "React",
+      "Socket.io",
+      "Node.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "WebSockets",
+    ],
+    url: "https://draw-and-guess-production-92b7.up.railway.app/",
+    images: [
+      "/images/projects/p61.png",
+      "/images/projects/p62.png",
+      "/images/projects/p63.png",
+      "/images/projects/p64.png",
+      "/images/projects/p65.png",
+    ],
+    size: "medium",
+    year: 2025,
+  },
 ];
 
 export const professionalProjects = projects.filter(
   (project) => project.category === "professional",
 );
 
-// TODO: Add independent side projects once they are ready to feature publicly.
 export const independentProjects = projects.filter(
   (project) => project.category === "independent",
 );

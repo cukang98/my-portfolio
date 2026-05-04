@@ -14,14 +14,14 @@ export default function Work() {
       <SectionLabel number="02" title="Work" />
       <div className={styles.header}>
         <div>
-          <h2 className={styles.heading}>Selected frontend work</h2>
+          <h2 className={styles.heading}>Things I’ve Worked On</h2>
           <p className={styles.kicker}>
-            Work projects for now. Side projects have a spot waiting for them.
+            Work projects, personal builds, and the product details behind them.
           </p>
         </div>
         <p className={styles.sub}>
-          The work stuff is more polished. The side-project space is where I
-          can try things out and figure stuff out. 🧪
+          The professional projects show production polish. The independent ones
+          show how I think when I own the full build.
         </p>
       </div>
       <BentoGrid />

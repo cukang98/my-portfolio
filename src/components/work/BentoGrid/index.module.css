@@ -1,7 +1,11 @@
+/* ─── Root scaffold ──────────────────────────────────────────────────────── */
+
 .showcase {
   display: grid;
   gap: 18px;
 }
+
+/* ─── Header bar (tabs + count) ──────────────────────────────────────────── */
 
 .showcaseHeader {
   display: flex;
@@ -28,10 +32,10 @@
   padding: 0 14px;
   border: 1px solid transparent;
   border-radius: 8px;
-  color: var(--text-500);
+  color: var(--text-400);
   cursor: pointer;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   transition:
     background var(--duration-fast) var(--ease-out-expo),
     border-color var(--duration-fast) var(--ease-out-expo),
@@ -53,7 +57,7 @@
   height: 22px;
   place-items: center;
   border-radius: 999px;
-  background: var(--surface-muted);
+  background: var(--bg);
   color: var(--text-600);
   font-size: 11px;
 }
@@ -73,19 +77,131 @@
 .viewSummary span {
   color: var(--accent);
   font-size: 28px;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
 }
 
 .viewSummary p {
   max-width: 120px;
-  color: var(--text-500);
+  color: var(--text-400);
   font-family: var(--font-mono);
   font-size: 10px;
   line-height: 1.35;
   text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
+
+/* ─── Professional: banner ───────────────────────────────────────────────── */
+
+.proPanelWrap {
+  display: grid;
+  gap: 20px;
+}
+
+.proBanner {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.proBannerGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 102, 204, 0.18) 0%,
+    rgba(0, 160, 255, 0.12) 30%,
+    rgba(99, 102, 241, 0.14) 60%,
+    rgba(0, 102, 204, 0.08) 100%
+  );
+  background-size: 300% 300%;
+  animation: proBannerShift 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.proBannerGradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 15% 50%,
+    rgba(0, 102, 204, 0.1) 0%,
+    transparent 60%
+  );
+  animation: proBannerPulse 5s ease-in-out infinite alternate;
+}
+
+@keyframes proBannerShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes proBannerPulse {
+  from { opacity: 0.5; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.15); }
+}
+
+.proBannerContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.proBannerLeft {
+  display: grid;
+  gap: 12px;
+}
+
+.proBannerLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.proBannerLabel::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+}
+
+.proBannerHeading {
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text-900);
+  max-width: 22ch;
+}
+
+.proBannerSub {
+  max-width: 300px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-400);
+  letter-spacing: -0.01em;
+  text-align: right;
+}
+
+/* ─── Professional: two-column layout ────────────────────────────────────── */
 
 .professionalPanel {
   display: grid;
@@ -101,25 +217,16 @@
   gap: 14px;
 }
 
-.timelineIntro,
-.labIntro,
-.emptyState {
+.timelineIntro {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
 }
 
-.timelineIntro {
-  display: grid;
-  gap: 8px;
-  padding: 18px;
-}
-
-.timelineIntro span,
-.caseMeta,
-.labIntro span,
-.labMeta,
-.emptyState span {
+.timelineIntro span {
   color: var(--text-400);
   font-family: var(--font-mono);
   font-size: 10px;
@@ -175,12 +282,12 @@
 .timelineItemActive {
   border-color: var(--border);
   background: var(--surface);
-  box-shadow: 0 14px 34px rgba(9, 9, 11, 0.055);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.055);
   transform: translateY(-1px);
 }
 
 .timelineItemActive {
-  border-color: rgba(37, 99, 235, 0.28);
+  border-color: rgba(0, 102, 204, 0.28);
 }
 
 .timelineIndex {
@@ -214,7 +321,7 @@
   overflow: hidden;
   color: var(--text-900);
   font-size: 14px;
-  font-weight: 750;
+  font-weight: 600;
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -222,13 +329,15 @@
 
 .timelineText small,
 .timelineYear {
-  color: var(--text-500);
+  color: var(--text-400);
   font-size: 12px;
 }
 
 .timelineYear {
   font-family: var(--font-mono);
 }
+
+/* ─── Professional: case study spotlight ─────────────────────────────────── */
 
 .caseWrap {
   min-width: 0;
@@ -239,22 +348,141 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.04);
 }
+
+.caseBody {
+  display: grid;
+  gap: 20px;
+  padding: clamp(22px, 4vw, 36px);
+}
+
+.caseMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--text-400);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.caseTitleRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+.caseTitleRow h3 {
+  max-width: 760px;
+  color: var(--text-900);
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.caseTitleRow p {
+  margin-top: 10px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.caseDescription {
+  max-width: 760px;
+  color: var(--text-600);
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.caseContentGrid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.78fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.impactCard {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 18px;
+  border: 1px solid rgba(0, 102, 204, 0.18);
+  border-radius: 8px;
+  background: rgba(0, 102, 204, 0.04);
+}
+
+.impactCard span {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.impactCard p,
+.highlights li {
+  color: var(--text-600);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.highlights {
+  display: grid;
+  gap: 9px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(245, 245, 247, 0.6);
+  list-style: none;
+}
+
+.highlights li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+/* ─── Shared: media (image gallery) ──────────────────────────────────────── */
 
 .media,
 .mediaFallback {
   position: relative;
-  height: clamp(300px, 42vw, 460px);
+  width: 100%;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 18% 16%, rgba(37, 99, 235, 0.13), transparent 34%),
-    var(--surface-muted);
+  background: var(--bg);
 }
 
-.mediaCompact,
-.mediaFallback.mediaCompact {
-  height: 190px;
+/* Inside .caseStudy: fixed height */
+.caseStudy .media,
+.caseStudy .mediaFallback {
+  height: clamp(300px, 42vw, 460px);
+}
+
+/* Inside .labHero: fills parent */
+.labHero .media,
+.labHero .mediaFallback {
+  height: 100%;
 }
 
 .mediaImage {
@@ -277,9 +505,11 @@
 }
 
 .mediaMobile {
-  background:
-    linear-gradient(135deg, rgba(9, 9, 11, 0.94), rgba(39, 39, 42, 0.9)),
-    var(--text-900);
+  background: linear-gradient(
+    135deg,
+    rgba(9, 9, 11, 0.92),
+    rgba(30, 30, 35, 0.88)
+  );
 }
 
 .mediaMobile .mediaImage {
@@ -306,9 +536,9 @@
   display: flex;
   gap: 7px;
   padding: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
-  background: rgba(9, 9, 11, 0.34);
+  background: rgba(9, 9, 11, 0.32);
   backdrop-filter: blur(12px);
 }
 
@@ -318,7 +548,7 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.48);
+  background: rgba(255, 255, 255, 0.45);
   cursor: pointer;
   transition:
     background var(--duration-fast) var(--ease-out-expo),
@@ -337,49 +567,13 @@
 }
 
 .mediaFallback span {
-  color: rgba(9, 9, 11, 0.12);
+  color: rgba(9, 9, 11, 0.1);
   font-size: 108px;
   font-weight: 800;
   letter-spacing: -0.08em;
 }
 
-.caseBody {
-  display: grid;
-  gap: 20px;
-  padding: clamp(22px, 4vw, 36px);
-}
-
-.caseMeta,
-.labMeta {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.caseTitleRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 22px;
-  align-items: flex-start;
-}
-
-.caseTitleRow h3 {
-  max-width: 760px;
-  color: var(--text-900);
-  font-size: clamp(30px, 4vw, 52px);
-  font-weight: 750;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-}
-
-.caseTitleRow p {
-  margin-top: 10px;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
+/* ─── Shared: project links ───────────────────────────────────────────────── */
 
 .links {
   display: flex;
@@ -391,172 +585,164 @@
   display: inline-flex;
   min-height: 34px;
   align-items: center;
-  padding: 0 12px;
-  border: 1px solid var(--border);
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
-  color: var(--text-900);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
   font-size: 13px;
-  font-weight: 750;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   transition:
     background var(--duration-fast) var(--ease-out-expo),
-    border-color var(--duration-fast) var(--ease-out-expo),
-    color var(--duration-fast) var(--ease-out-expo);
+    border-color var(--duration-fast) var(--ease-out-expo);
 }
 
 .links a:hover {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.52);
+  border-color: rgba(255, 255, 255, 0.48);
 }
 
-.caseDescription {
-  max-width: 760px;
-  color: var(--text-600);
-  font-size: 16px;
-  line-height: 1.72;
-}
-
-.caseContentGrid {
-  display: grid;
-  grid-template-columns: minmax(220px, 0.78fr) minmax(0, 1fr);
-  gap: 12px;
-}
-
-.impactCard {
-  display: grid;
-  gap: 10px;
-  align-content: start;
-  padding: 18px;
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  border-radius: 8px;
-  background: rgba(37, 99, 235, 0.055);
-}
-
-.impactCard span {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.impactCard p,
-.highlights li {
-  color: var(--text-700);
-  font-size: 14px;
-  line-height: 1.65;
-}
-
-.highlights {
-  display: grid;
-  gap: 9px;
-  padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: rgba(247, 247, 244, 0.58);
-  list-style: none;
-}
-
-.highlights li {
-  position: relative;
-  padding-left: 18px;
-}
-
-.highlights li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
+/* ─── Independent: banner header ─────────────────────────────────────────── */
 
 .independentPanel {
   display: grid;
-  gap: 14px;
+  gap: 20px;
 }
 
-.labIntro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
-  gap: 24px;
-  align-items: end;
-  padding: clamp(22px, 4vw, 32px);
+.labBanner {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--text-900);
+  overflow: hidden;
+}
+
+.labBanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
-    linear-gradient(135deg, rgba(9, 9, 11, 0.94), rgba(39, 39, 42, 0.91)),
-    var(--text-900);
+    radial-gradient(
+      ellipse at 80% 0%,
+      rgba(0, 102, 204, 0.22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 10% 100%,
+      rgba(52, 199, 89, 0.1) 0%,
+      transparent 45%
+    );
+  pointer-events: none;
+  z-index: 0;
 }
 
-.labIntro h3 {
-  max-width: 680px;
-  margin-top: 8px;
-  color: #fff;
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 750;
-  letter-spacing: -0.045em;
-  line-height: 1;
+/* ── Diagonal emoji background ── */
+
+.labTickerBg {
+  position: absolute;
+  inset: -80px -60px;
+  overflow: hidden;
+  transform: rotate(-9deg);
+  transform-origin: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.13;
 }
 
-.labIntro p {
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 14px;
-  line-height: 1.7;
+.labTickerRow {
+  display: flex;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 4px 0;
 }
 
-.labGrid {
+.labTickerTrack {
+  display: inline-block;
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 20px;
+  line-height: 1.6;
+  animation: tickerFwd 24s linear infinite;
+  will-change: transform;
+}
+
+.labTickerRev {
+  animation: tickerBwd 20s linear infinite;
+}
+
+@keyframes tickerFwd {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes tickerBwd {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Banner content ── */
+
+.labBannerContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.labBannerLeft {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
-.labCard {
-  display: grid;
-  overflow: hidden;
-  height: 100%;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: inherit;
-  text-decoration: none;
-  transition:
-    border-color var(--duration-fast) var(--ease-out-expo),
-    box-shadow var(--duration-fast) var(--ease-out-expo),
-    transform var(--duration-fast) var(--ease-out-expo);
+.labBannerLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.45);
 }
 
-.labCard:hover {
-  border-color: rgba(37, 99, 235, 0.3);
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-3px);
+.labBannerLabel::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.25);
 }
 
-.labCardBody {
-  display: grid;
-  gap: 13px;
-  padding: 18px;
+.labBannerHeading {
+  font-size: clamp(26px, 3.8vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: #fff;
+  max-width: 20ch;
 }
 
-.labCardBody h3 {
-  color: var(--text-900);
-  font-size: 21px;
-  font-weight: 750;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-}
-
-.labCardBody p {
-  color: var(--text-600);
+.labBannerSub {
+  max-width: 280px;
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.48);
+  letter-spacing: -0.01em;
+  text-align: right;
 }
+
+/* ─── Empty state ─────────────────────────────────────────────────────────── */
 
 .emptyState {
   display: grid;
@@ -564,16 +750,30 @@
   min-height: 260px;
   align-content: center;
   padding: clamp(24px, 5vw, 44px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   background:
-    radial-gradient(circle at top right, rgba(37, 99, 235, 0.1), transparent 42%),
+    radial-gradient(
+      circle at top right,
+      rgba(0, 102, 204, 0.08),
+      transparent 42%
+    ),
     var(--surface);
+}
+
+.emptyState span {
+  color: var(--text-400);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .emptyState h3 {
   max-width: 560px;
   color: var(--text-900);
   font-size: clamp(24px, 3vw, 34px);
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.05;
 }
@@ -584,6 +784,8 @@
   font-size: 15px;
   line-height: 1.7;
 }
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1040px) {
   .professionalPanel {
@@ -611,23 +813,25 @@
     width: min(78vw, 320px);
     flex: 0 0 auto;
   }
+}
 
-  .labGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 840px) {
+  .labBannerContent,
+  .proBannerContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .labBannerSub,
+  .proBannerSub {
+    text-align: left;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 760px) {
-  .showcaseHeader,
-  .viewBar,
-  .caseTitleRow,
-  .caseContentGrid,
-  .labIntro {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
   .showcaseHeader {
+    flex-direction: column;
     align-items: stretch;
   }
 
@@ -636,12 +840,18 @@
     padding: 6px 8px 2px;
   }
 
-  .links {
-    flex-wrap: wrap;
+  .caseTitleRow {
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .labGrid {
+  .caseContentGrid {
     grid-template-columns: 1fr;
+  }
+
+  .links a {
+    padding: 0 12px;
+    font-size: 12px;
   }
 }
 
@@ -649,6 +859,11 @@
   .viewButton {
     justify-content: space-between;
     width: 100%;
+  }
+
+  .viewBar {
+    width: 100%;
+    flex-direction: column;
   }
 
   .timelineItem {
@@ -663,4 +878,3 @@
     width: min(64%, 220px);
   }
 }
-
