@@ -9,6 +9,7 @@ import {
 } from "@/components/analytics/GoogleTagManager";
 import GtmPageview from "@/components/analytics/GtmPageview";
 import { getSiteUrl, seo } from "@/data/seo";
+import { Analytics } from "@vercel/analytics/next";
 
 const siteUrl = getSiteUrl();
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
@@ -78,6 +79,7 @@ export default function RootLayout({
         {GTM_ID && <GoogleTagManagerScript gtmId={GTM_ID} />}
         {GTM_ID && <GtmPageview />}
         {children}
+        <Analytics />
       </body>
     </html>
   );
