@@ -3,9 +3,15 @@ import type { Metadata } from "next";
 // styles
 import "@/styles/globals.css";
 
+import {
+  GoogleTagManagerNoScript,
+  GoogleTagManagerScript,
+} from "@/components/analytics/GoogleTagManager";
+import GtmPageview from "@/components/analytics/GtmPageview";
 import { getSiteUrl, seo } from "@/data/seo";
 
 const siteUrl = getSiteUrl();
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -67,7 +73,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {GTM_ID && <GoogleTagManagerNoScript gtmId={GTM_ID} />}
+        {GTM_ID && <GoogleTagManagerScript gtmId={GTM_ID} />}
+        {GTM_ID && <GtmPageview />}
+        {children}
+      </body>
     </html>
   );
 }
