@@ -16,6 +16,34 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Portfolio Chatbot
+
+This portfolio includes a floating CK Chat assistant that answers questions about
+Cu Kang's background, experience, projects, skills, working style, and contact
+details. It is intentionally scoped to the portfolio and should refuse unrelated
+general questions.
+
+The recommended free API is the Gemini API. Google documents a free usage tier
+for active projects, with rate limits measured by requests per minute, tokens per
+minute, and requests per day:
+
+- Gemini rate limits: https://ai.google.dev/gemini-api/docs/rate-limits
+- Gemini text generation: https://ai.google.dev/gemini-api/docs/text-generation
+
+Create `.env.local` in the project root:
+
+```bash
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+Optional model override:
+
+```bash
+GEMINI_MODEL=gemini-2.5-flash-lite
+```
+
+Restart the dev server after editing `.env.local`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

@@ -8,6 +8,7 @@ import Skills from "@/components/sections/Skills";
 import Journey from "@/components/sections/Journey";
 import Process from "@/components/sections/Process";
 import Contact from "@/components/sections/Contact";
+import PortfolioChatbot from "@/components/chat/PortfolioChatbot";
 
 // data
 import { meta } from "@/data/meta";
@@ -108,6 +109,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <PortfolioChatbot />
     </>
   );
 }
