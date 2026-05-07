@@ -1,20 +1,12 @@
 export type ProjectSize = "featured" | "medium" | "small";
 export type ProjectType = "web" | "mobile";
 export type ProjectCategory = "professional" | "independent";
-export type ProjectKind =
-  | "Admin Platform"
-  | "Supplier Tool"
-  | "Consumer Web"
-  | "Mobile Product"
-  | "E-commerce"
-  | "Personal Build"
-  | "Experiment";
 
 export interface Project {
   id: string;
   title: string;
   category: ProjectCategory;
-  kind: ProjectKind;
+  kind: string;
   role: string;
   description: string;
   impact: string;
@@ -83,18 +75,18 @@ export const projects: Project[] = [
     id: "project-three",
     title: "Wizlah (Home Design Platform)",
     category: "professional",
-    kind: "Consumer Web",
+    kind: "Home Design",
     role: "Frontend developer on product team",
     description:
-      "A consumer home design platform for visualizing layouts, customizing living spaces, and exploring browser-based planning experiences.",
+      "A consumer home design platform for visualizing layouts, customizing living spaces, and reimagining showroom snapshots through an AI-powered render chat.",
     impact:
-      "Connected interactive room planning with a polished responsive web experience for stronger product discovery.",
+      "Connected interactive room planning with AI-assisted visualization, letting users go from a real-life showroom photo to an enhanced design concept in a single chat flow.",
     highlights: [
-      "Worked on responsive UI implementation from design references.",
-      "Supported interactive product and space-planning experiences in the browser.",
-      "Contributed to frontend performance improvements for smoother user interactions.",
+      "Built the AI render chat experience — users upload a showroom snapshot, send a prompt, and receive an AI-enhanced render inline in the conversation.",
+      "Worked on responsive UI implementation from design references and supported interactive product and space-planning experiences in the browser.",
+      "Contributed to frontend performance improvements for smoother image upload, streaming, and render previews.",
     ],
-    tags: ["React", "JavaScript", "3D", "WebGL", "Responsive UI"],
+    tags: ["React", "JavaScript", "3D", "WebGL", "AI Render", "Responsive UI"],
     url: "https://www.wizlah.com",
     images: [
       "/images/projects/p31.png",
@@ -102,6 +94,8 @@ export const projects: Project[] = [
       "/images/projects/p33.png",
       "/images/projects/p34.png",
       "/images/projects/p35.png",
+      "/images/projects/p36.png",
+      "/images/projects/p37.png",
     ],
     size: "medium",
     year: 2025,
@@ -192,6 +186,39 @@ export const projects: Project[] = [
       "/images/projects/p63.png",
       "/images/projects/p64.png",
       "/images/projects/p65.png",
+    ],
+    size: "medium",
+    year: 2025,
+  },
+  {
+    id: "project-seven",
+    title: "PixelLab",
+    category: "independent",
+    kind: "Personal Build",
+    role: "Solo developer",
+    description:
+      "A privacy-first, browser-based image studio for compressing, converting, cropping, retouching, watermarking and batch-processing photos — entirely on-device, with zero uploads.",
+    impact:
+      "Demonstrated that a complete image-processing toolkit can run client-side with first-class UX, removing the need for server uploads, accounts, or third-party APIs.",
+    highlights: [
+      "Built a Canvas + CSS-filter pipeline covering quality and target-size compression (binary-searched), format conversion across PNG/JPEG/WebP/AVIF, aspect-ratio and free-rectangle cropping, ten adjustment sliders, and concurrent batch ZIP export.",
+      "Engineered live, lag-free interactions: rAF-throttled draggable watermark with single-snapshot undo, debounced auto-reprocessing for size feedback, free-crop draw-and-Enter UX, and global undo/redo shortcuts (⌘Z / ⌘⇧Z).",
+      "Designed an editorial-brutalist identity — paper-ink palette with lime/coral accents, hard 1.5px borders, Instrument Serif italic for emphasis — and an animated before/after specimen card driven by a single shared MotionValue for perfect sync.",
+    ],
+    tags: [
+      "Next.js",
+      "JavaScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Zustand",
+      "Canvas API",
+      "Image Processing",
+    ],
+    url: "https://trypixellab.vercel.app/",
+    images: [
+      "/images/projects/p71.png",
+      "/images/projects/p72.png",
+      "/images/projects/p73.png",
     ],
     size: "medium",
     year: 2025,

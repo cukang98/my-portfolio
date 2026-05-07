@@ -93,12 +93,22 @@ function ProjectLinks({ project }: { project: Project }) {
   return (
     <div className={styles.links}>
       {project.url && (
-        <a href={project.url} target="_blank" rel="noopener noreferrer">
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.linkPrimary}
+        >
           Live ↗
         </a>
       )}
       {project.repo && (
-        <a href={project.repo} target="_blank" rel="noopener noreferrer">
+        <a
+          href={project.repo}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.linkSecondary}
+        >
           Repo ↗
         </a>
       )}

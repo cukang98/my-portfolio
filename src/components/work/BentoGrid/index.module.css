@@ -136,14 +136,26 @@
 }
 
 @keyframes proBannerShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes proBannerPulse {
-  from { opacity: 0.5; transform: scale(1); }
-  to   { opacity: 1;   transform: scale(1.15); }
+  from {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 
 .proBannerContent {
@@ -490,8 +502,8 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
+  object-position: center;
   opacity: 0;
   transform: scale(1.025);
   transition:
@@ -586,22 +598,40 @@
   min-height: 34px;
   align-items: center;
   padding: 0 14px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid transparent;
   border-radius: 999px;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(10px);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition:
     background var(--duration-fast) var(--ease-out-expo),
-    border-color var(--duration-fast) var(--ease-out-expo);
+    border-color var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-fast) var(--ease-out-expo);
 }
 
-.links a:hover {
-  background: rgba(0, 0, 0, 0.52);
-  border-color: rgba(255, 255, 255, 0.48);
+.linkPrimary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.linkPrimary:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.linkSecondary {
+  color: var(--text-900);
+  background: var(--surface);
+  border-color: var(--border-hover);
+}
+
+.linkSecondary:hover {
+  background: var(--surface-muted);
+  border-color: var(--text-900);
+  transform: translateY(-1px);
 }
 
 /* ─── Independent: banner header ─────────────────────────────────────────── */
@@ -676,13 +706,21 @@
 }
 
 @keyframes tickerFwd {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes tickerBwd {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* ── Banner content ── */
