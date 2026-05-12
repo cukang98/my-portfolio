@@ -34,53 +34,111 @@
   line-height: 1.65;
 }
 
+/* ---------- Bento grid ---------- */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
 }
 
+.card[data-span="4"] { grid-column: span 4; }
+.card[data-span="5"] { grid-column: span 5; }
+.card[data-span="7"] { grid-column: span 7; }
+
+/* ---------- Card ---------- */
 .card {
   position: relative;
   display: grid;
-  gap: 15px;
-  min-height: 280px;
-  padding: 22px;
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  min-height: 260px;
+  padding: 24px;
   overflow: hidden;
+  isolation: isolate;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 255, 255, 0.82)
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 1px 2px rgba(0, 0, 0, 0.02);
   transition:
-    transform var(--duration-fast) var(--ease-out-expo),
-    border-color var(--duration-fast) var(--ease-out-expo),
-    box-shadow var(--duration-fast) var(--ease-out-expo);
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: auto -20% -40% -20%;
-  height: 180px;
-  background: radial-gradient(circle, var(--accent), transparent 64%);
-  opacity: 0.07;
-  transform: translateY(28px);
-  transition:
-    opacity var(--duration-base) var(--ease-out-expo),
-    transform var(--duration-base) var(--ease-out-expo);
+    border-color var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo);
 }
 
 .card:hover {
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 18px 40px -22px color-mix(in srgb, var(--accent) 60%, transparent),
+    0 6px 16px -10px rgba(0, 0, 0, 0.08);
+}
+
+/* accent line top */
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 75%, transparent),
+    transparent
+  );
+  opacity: 0.55;
+  transition: opacity var(--duration-base) var(--ease-out-expo);
+  z-index: 2;
 }
 
 .card:hover::before {
-  opacity: 0.13;
-  transform: translateY(0);
+  opacity: 1;
 }
 
+/* radial accent glow bottom-right */
+.cardGlow {
+  position: absolute;
+  inset: auto -25% -45% auto;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, var(--accent), transparent 62%);
+  opacity: 0.08;
+  transform: translate(0, 18px);
+  transition:
+    opacity var(--duration-base) var(--ease-out-expo),
+    transform var(--duration-base) var(--ease-out-expo);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card:hover .cardGlow {
+  opacity: 0.2;
+  transform: translate(0, 0);
+}
+
+/* subtle dot grid */
+.cardGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 18%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  opacity: 0.18;
+  mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+  pointer-events: none;
+}
+
+/* ---------- Header ---------- */
 .cardHeader {
   position: relative;
   z-index: 1;
@@ -89,12 +147,31 @@
   justify-content: space-between;
 }
 
+.orbWrap {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+
 .orb {
-  width: 12px;
-  height: 12px;
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.orbPulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  animation: pulseRing 2.6s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2);   opacity: 0;   }
 }
 
 .index {
@@ -104,25 +181,50 @@
   letter-spacing: 0.08em;
 }
 
-.card h3 {
+/* ---------- Body ---------- */
+.cardBody {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTitle {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
   color: var(--text-900);
   font-size: 22px;
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.028em;
   line-height: 1.15;
 }
 
-.card p {
-  position: relative;
-  z-index: 1;
+.titleUnderline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.card:hover .titleUnderline {
+  transform: scaleX(1);
+}
+
+.cardSummary {
   color: var(--text-600);
   font-size: 14px;
   letter-spacing: -0.005em;
   line-height: 1.65;
 }
 
+/* ---------- Chips ---------- */
 .chips {
   position: relative;
   z-index: 1;
@@ -135,53 +237,70 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 6px 9px;
+  gap: 6px;
+  padding: 7px 11px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.76);
-  color: var(--text-600);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text-700);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  cursor: default;
   transition:
     background var(--duration-fast) var(--ease-out-expo),
     border-color var(--duration-fast) var(--ease-out-expo),
-    color var(--duration-fast) var(--ease-out-expo);
+    color var(--duration-fast) var(--ease-out-expo),
+    box-shadow var(--duration-fast) var(--ease-out-expo);
 }
 
 .chip:hover {
-  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
-  background: color-mix(in srgb, var(--accent) 8%, white);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, white);
   color: var(--text-900);
+  box-shadow: 0 6px 16px -10px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 .chipIcon {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
   flex-shrink: 0;
-  opacity: 0.8;
+  color: var(--accent);
+  opacity: 0.95;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  /* 2-col bento: pair items into rows */
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card[data-span="4"],
+  .card[data-span="5"],
+  .card[data-span="7"] {
+    grid-column: span 1;
+  }
 }
 
 @media (max-width: 960px) {
-  .header,
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .header {
+    grid-template-columns: 1fr;
     align-items: start;
   }
 }
 
-@media (max-width: 700px) {
-  .header,
+@media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
-
+  .card[data-span="4"],
+  .card[data-span="5"],
+  .card[data-span="7"] {
+    grid-column: span 1;
+  }
   .card {
     min-height: auto;
+    padding: 20px;
   }
 }
-

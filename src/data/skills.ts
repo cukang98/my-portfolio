@@ -26,6 +26,12 @@ export const skillGroups: SkillGroup[] = [
     accent: "#0891B2",
   },
   {
+    title: "Backend & Database",
+    summary: "Server-side APIs and data persistence for full-stack features.",
+    skills: ["Express.js", "Prisma", "PostgreSQL"],
+    accent: "#0F766E",
+  },
+  {
     title: "Tooling & Workflow",
     summary: "The practical layer around shipping and maintaining frontend work.",
     skills: ["Firebase", "Cloud Functions", "GTM", "GA4", "Schema Markup"],
